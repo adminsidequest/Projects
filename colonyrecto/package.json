@@ -1,0 +1,13 @@
+{
+  "name": "colonyrecto",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web de Colon y Recto S.A., centro gastrointestinal del Dr. Héctor Enríquez Blanco en la Ciudad de Guatemala.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./assets/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./assets/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

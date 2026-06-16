@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Halcyon · Modern Home and Lifestyle Goods</title>
+  <meta name="description" content="Halcyon is a modern home and lifestyle store for considered kitchenware, lighting, textiles, decor, and small furniture. Free shipping over 75. A fully working demo store." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cloud: '#FBFAF8',
+            ink: '#181613',
+            forest: '#2E6E4E',
+            ember: '#E8703A',
+            stone: '#6B675F',
+            line: '#E7E3DB',
+          },
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            body: ['"Inter"', 'system-ui', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 1px 2px rgba(24,22,19,0.04), 0 8px 24px rgba(24,22,19,0.06)',
+            lift: '0 2px 6px rgba(24,22,19,0.06), 0 18px 40px rgba(24,22,19,0.12)',
+          },
+          borderRadius: {
+            xl: '0.9rem',
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: #181613; background: #FBFAF8; }
+    h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+
+    *:focus-visible {
+      outline: 2px solid #2E6E4E;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* Drawer + modal transitions */
+    .drawer-panel { transition: transform 0.34s cubic-bezier(0.16,1,0.3,1); }
+    .scrim { transition: opacity 0.3s ease; }
+
+    /* Toast */
+    .toast {
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* Product image zoom */
+    .pcard-media img { transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .pcard:hover .pcard-media img { transform: scale(1.05); }
+
+    /* Fade-in for view changes */
+    .view-fade { animation: viewFade 0.32s cubic-bezier(0.16,1,0.3,1); }
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .no-scroll { overflow: hidden; }
+
+    /* Number input cleanup */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    /* Sticky header subtle border on scroll */
+    .star { letter-spacing: 0.04em; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-cloud text-ink antialiased">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-3 focus:left-3 focus:bg-forest focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">Skip to main content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="sticky top-0 z-40 bg-cloud/95 backdrop-blur border-b border-line">
+    <!-- promo strip -->
+    <div class="bg-forest text-white text-center text-xs sm:text-sm py-2 px-4 font-medium">
+      Free shipping on orders over 75 &middot; 30 day easy returns &middot; This is a Sidequest Weblabs demo store
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-4 h-16">
+        <!-- mobile menu button -->
+        <button id="mobileMenuBtn" class="md:hidden p-2 -ml-2 rounded-lg hover:bg-line/60" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+
+        <!-- logo -->
+        <a href="#/" class="flex items-center gap-2 shrink-0 group" aria-label="Halcyon home">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-forest text-white font-display font-extrabold text-lg">H</span>
+          <span class="font-display font-extrabold text-xl tracking-tight">Halcyon</span>
+        </a>
+
+        <!-- search (desktop) -->
+        <div class="hidden md:flex flex-1 max-w-md mx-2">
+          <label for="searchInput" class="sr-only">Search products</label>
+          <div class="relative w-full">
+            <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-stone" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-3.2-3.2"/></svg>
+            <input id="searchInput" type="search" placeholder="Search kitchen, lighting, decor..." autocomplete="off"
+              class="w-full pl-10 pr-3 py-2 rounded-xl border border-line bg-white text-sm placeholder:text-stone focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />
+          </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-1 ml-auto text-sm font-medium" aria-label="Primary">
+          <a href="#/orders" class="px-3 py-2 rounded-lg hover:bg-line/60 transition">Orders</a>
+          <a href="#/admin" class="px-3 py-2 rounded-lg hover:bg-line/60 transition">Admin</a>
+        </nav>
+
+        <!-- cart button -->
+        <button id="cartBtn" class="relative p-2 rounded-lg hover:bg-line/60 transition ml-auto md:ml-0" aria-haspopup="dialog" aria-controls="cartDrawer" aria-label="Open cart">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span id="cartCount" class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-ember text-white text-[11px] font-bold flex items-center justify-center" hidden>0</span>
+        </button>
+      </div>
+
+      <!-- search (mobile) -->
+      <div class="md:hidden pb-3">
+        <label for="searchInputMobile" class="sr-only">Search products</label>
+        <div class="relative w-full">
+          <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-stone" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-3.2-3.2"/></svg>
+          <input id="searchInputMobile" type="search" placeholder="Search products..." autocomplete="off"
+            class="w-full pl-10 pr-3 py-2 rounded-xl border border-line bg-white text-sm placeholder:text-stone focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />
+        </div>
+      </div>
+    </div>
+
+    <!-- mobile menu drawer -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-line bg-cloud">
+      <nav class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1 text-sm font-medium" aria-label="Mobile">
+        <a href="#/" class="px-3 py-2.5 rounded-lg hover:bg-line/60">Shop</a>
+        <a href="#/orders" class="px-3 py-2.5 rounded-lg hover:bg-line/60">Orders</a>
+        <a href="#/admin" class="px-3 py-2.5 rounded-lg hover:bg-line/60">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ MAIN VIEW ============ -->
+  <main id="main" class="flex-1 w-full"></main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-line bg-white mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+      <div class="grid gap-8 md:grid-cols-4">
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-forest text-white font-display font-extrabold">H</span>
+            <span class="font-display font-extrabold text-lg">Halcyon</span>
+          </div>
+          <p class="text-sm text-stone max-w-sm leading-relaxed">Considered home and lifestyle goods for everyday calm. Kitchen, lighting, textiles, decor, and small furniture, chosen to last.</p>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-sm mb-3">Shop</h3>
+          <ul class="space-y-2 text-sm text-stone">
+            <li><a href="#/" class="hover:text-forest">All products</a></li>
+            <li><a href="#/orders" class="hover:text-forest">Your orders</a></li>
+            <li><a href="#/cart" class="hover:text-forest">Your cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display font-semibold text-sm mb-3">Help</h3>
+          <ul class="space-y-2 text-sm text-stone">
+            <li><a href="#/admin" class="hover:text-forest">Admin (demo)</a></li>
+            <li><span class="text-stone">Free shipping over 75</span></li>
+            <li><span class="text-stone">30 day returns</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-9 pt-6 border-t border-line flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-stone">
+        <p>Demo build by <a href="/" class="font-semibold text-forest hover:underline">Sidequest Weblabs</a>. Halcyon is a fictional store created to showcase a full e-commerce build.</p>
+        <p>Your data is stored locally in your browser. Nothing is sent to a server.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div id="cartScrim" class="scrim fixed inset-0 z-50 bg-ink/40 opacity-0 pointer-events-none" hidden></div>
+  <aside id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true"
+    class="drawer-panel fixed top-0 right-0 z-50 h-full w-full max-w-md bg-cloud shadow-lift translate-x-full flex flex-col" hidden>
+    <div class="flex items-center justify-between px-5 py-4 border-b border-line">
+      <h2 class="font-display font-bold text-lg">Your cart</h2>
+      <button id="cartCloseBtn" class="p-2 -mr-2 rounded-lg hover:bg-line/60" aria-label="Close cart">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="cartDrawerBody" class="flex-1 overflow-y-auto"></div>
+    <div id="cartDrawerFoot" class="border-t border-line bg-white"></div>
+  </aside>
+
+  <!-- ============ ADMIN MODAL (product editor) ============ -->
+  <div id="modalScrim" class="scrim fixed inset-0 z-[60] bg-ink/50 opacity-0 pointer-events-none p-4 flex items-start sm:items-center justify-center overflow-y-auto" hidden>
+    <div id="modalPanel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" class="w-full max-w-lg bg-cloud rounded-xl shadow-lift my-8"></div>
+  </div>
+
+  <!-- ============ TOAST REGION ============ -->
+  <div id="toastRegion" class="fixed z-[70] bottom-4 left-1/2 -translate-x-1/2 flex flex-col gap-2 items-center w-full max-w-sm px-4 pointer-events-none" aria-live="polite" aria-atomic="false"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* =======================================================================
+       CONSTANTS + STORAGE
+       ======================================================================= */
+    var SEED_VERSION = 5;
+    var FREE_SHIP_THRESHOLD = 75;
+    var FLAT_SHIP = 6.95;
+    var PROMO_CODE = 'HALCYON10';
+    var PROMO_RATE = 0.10;
+    var ADMIN_CODE = 'admin';
+
+    var K = {
+      products: 'halcyon_products',
+      cart: 'halcyon_cart',
+      orders: 'halcyon_orders',
+      promo: 'halcyon_promo',
+      seed: 'halcyon_seed_version',
+      admin: 'halcyon_admin',
+    };
+
+    function read(key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw === null ? fallback : JSON.parse(raw);
+      } catch (e) { return fallback; }
+    }
+    function write(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+    }
+
+    /* =======================================================================
+       SEED DATA
+       ======================================================================= */
+    function img(photo, seed) {
+      return {
+        src: 'https://images.unsplash.com/photo-' + photo + '?auto=format&fit=crop&w=900&q=80',
+        seed: seed,
+      };
+    }
+
+    function seedProducts() {
+      var now = Date.now();
+      var day = 86400000;
+      return [
+        {
+          id: 'p1', name: 'Cumulus Stoneware Mug Set', category: 'Kitchen',
+          price: 38, salePrice: 29, stock: 24, rating: 4.8, createdAt: now - 6 * day,
+          image: img('1514228742587-6b1558fcca3d', 'halcyon-mug'),
+          description: 'A set of four hand glazed stoneware mugs in a soft matte oat finish. Generous twelve ounce capacity, comfortable to hold, and safe for both the dishwasher and the microwave. The kind of everyday object you reach for first.',
+        },
+        {
+          id: 'p2', name: 'Halo Linen Pendant Light', category: 'Lighting',
+          price: 149, salePrice: null, stock: 8, rating: 4.7, createdAt: now - 2 * day,
+          image: img('1513506003901-1e6a229e2d15', 'halcyon-pendant'),
+          description: 'A sculptural pendant wrapped in natural linen that diffuses a warm, even glow. Sized for a kitchen island or a reading nook, it ships with a three meter braided cord and a dimmable LED bulb included.',
+        },
+        {
+          id: 'p4', name: 'Meridian Brass Table Lamp', category: 'Lighting',
+          price: 128, salePrice: null, stock: 4, rating: 4.6, createdAt: now - 9 * day,
+          image: img('1517991104123-1d56a6e81ed9', 'halcyon-lamp'),
+          description: 'A slender wooden based lamp with a soft linen drum shade and a satisfying inline switch. The proportions are quiet and modern, equally at home on a desk, a console, or a bedside table.',
+        },
+        {
+          id: 'p6', name: 'Quill Ceramic Vase', category: 'Decor',
+          price: 46, salePrice: null, stock: 20, rating: 4.5, createdAt: now - 4 * day,
+          image: img('1578500494198-246f612d3b3d', 'halcyon-vase'),
+          description: 'A tall, gently tapered vase with a soft neutral finish. Beautiful on its own as a quiet sculptural moment, and just as good holding a loose seasonal bunch of dried stems beside the sofa.',
+        },
+        {
+          id: 'p7', name: 'Marlow Accent Chair', category: 'Furniture',
+          price: 289, salePrice: 239, stock: 6, rating: 4.6, createdAt: now - 3 * day,
+          image: img('1586023492125-27b2c045efd7', 'halcyon-chair'),
+          description: 'A mustard upholstered accent chair on slim tapered legs, with a gently scooped seat that is easy to sink into. The kind of quiet statement piece that warms up a reading corner or a bedroom.',
+        },
+        {
+          id: 'p8', name: 'Ember Wool Area Rug', category: 'Textiles',
+          price: 246, salePrice: 198, stock: 5, rating: 4.8, createdAt: now - 7 * day,
+          image: img('1600166898405-da9535204843', 'halcyon-rug'),
+          description: 'A hand loomed wool rug with an intricate woven border and a low, dense pile that feels wonderful underfoot. Naturally stain resistant and built to anchor a living room or a bedroom for years.',
+        },
+        {
+          id: 'p10', name: 'Solace Soy Candle Trio', category: 'Decor',
+          price: 42, salePrice: 34, stock: 30, rating: 4.7, createdAt: now - 1 * day,
+          image: img('1572726729207-a78d6feb18d7', 'halcyon-candle'),
+          description: 'Three hand poured soy candles in cedar, fig leaf, and sea salt. A clean burning forty hours each, set in reusable amber glass. A simple way to shift the mood of a room in a moment.',
+        },
+        {
+          id: 'p11', name: 'Atlas Oak Side Table', category: 'Furniture',
+          price: 168, salePrice: null, stock: 0, rating: 4.5, createdAt: now - 10 * day,
+          image: img('1532372320572-cda25653a26d', 'halcyon-sidetable'),
+          description: 'A round side table in solid white oak with a softly rounded edge and a lower shelf for books or a folded throw. Steady, honest, and sized to slot neatly beside a sofa or a favorite chair.',
+        },
+      ];
+    }
+
+    function seedOrders() {
+      var now = Date.now();
+      var day = 86400000;
+      function line(id, name, price, qty, cat) {
+        return { id: id, name: name, price: price, qty: qty, category: cat };
+      }
+      return [
+        {
+          id: 'HAL-2041',
+          date: new Date(now - 11 * day).toISOString(),
+          items: [ line('p1', 'Cumulus Stoneware Mug Set', 29, 1, 'Kitchen'), line('p10', 'Solace Soy Candle Trio', 34, 2, 'Decor') ],
+          subtotal: 97, shipping: 0, discount: 0, total: 97, status: 'Fulfilled',
+          customer: { email: 'noor.haddad@example.com', name: 'Noor Haddad', address: '14 Linden Way', city: 'Portland', postal: '97204', country: 'United States' },
+        },
+        {
+          id: 'HAL-2058',
+          date: new Date(now - 5 * day).toISOString(),
+          items: [ line('p4', 'Meridian Brass Table Lamp', 128, 1, 'Lighting') ],
+          subtotal: 128, shipping: 0, discount: 12.8, total: 115.2, status: 'Fulfilled',
+          customer: { email: 'theo.marsh@example.com', name: 'Theo Marsh', address: '92 Crescent Road', city: 'Austin', postal: '73301', country: 'United States' },
+        },
+        {
+          id: 'HAL-2063',
+          date: new Date(now - 2 * day).toISOString(),
+          items: [ line('p10', 'Solace Soy Candle Trio', 34, 1, 'Decor'), line('p6', 'Quill Ceramic Vase', 46, 1, 'Decor') ],
+          subtotal: 80, shipping: 0, discount: 0, total: 80, status: 'Paid',
+          customer: { email: 'mira.okafor@example.com', name: 'Mira Okafor', address: '5 Harbor Lane', city: 'Seattle', postal: '98101', country: 'United States' },
+        },
+      ];
+    }
+
+    function ensureSeed() {
+      var v = read(K.seed, null);
+      if (v !== SEED_VERSION || !Array.isArray(read(K.products, null))) {
+        write(K.products, seedProducts());
+        if (!Array.isArray(read(K.orders, null)) || v !== SEED_VERSION) {
+          write(K.orders, seedOrders());
+        }
+        write(K.seed, SEED_VERSION);
+      }
+    }
+
+    function resetDemo() {
+      write(K.products, seedProducts());
+      write(K.orders, seedOrders());
+      write(K.cart, []);
+      write(K.promo, null);
+      write(K.seed, SEED_VERSION);
+    }
+
+    /* =======================================================================
+       DATA ACCESSORS
+       ======================================================================= */
+    function getProducts() { return read(K.products, []); }
+    function setProducts(p) {
+      write(K.products, p);
+      // A stock or price change can alter the validated cart (sold-out lines are
+      // dropped, quantities are clamped), so keep the header badge in sync.
+      updateCartBadge();
+    }
+    function getProduct(id) {
+      var all = getProducts();
+      for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
+      return null;
+    }
+    function getCart() { return read(K.cart, []); }
+    function setCart(c) { write(K.cart, c); updateCartBadge(); }
+    function getOrders() { return read(K.orders, []); }
+    function setOrders(o) { write(K.orders, o); }
+    function getPromo() { return read(K.promo, null); }
+    function setPromo(p) { write(K.promo, p); }
+
+    function effectivePrice(p) {
+      return (p.salePrice !== null && p.salePrice !== undefined && p.salePrice < p.price) ? p.salePrice : p.price;
+    }
+    function isOnSale(p) {
+      return p.salePrice !== null && p.salePrice !== undefined && p.salePrice < p.price;
+    }
+    function isNew(p) {
+      return (Date.now() - p.createdAt) < (5 * 86400000);
+    }
+
+    /* =======================================================================
+       HELPERS
+       ======================================================================= */
+    function money(n) {
+      return '$' + (Math.round(n * 100) / 100).toFixed(2);
+    }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function attr(s) { return esc(s); }
+
+    function productImgTag(p, cls, eager) {
+      var fallback = 'https://picsum.photos/seed/' + esc(p.image.seed) + '/900/900';
+      return '<img src="' + attr(p.image.src) + '" alt="' + attr(p.name) + '" '
+        + 'class="' + cls + '" ' + (eager ? '' : 'loading="lazy" ')
+        + 'onerror="this.onerror=null;this.src=\'' + fallback + '\'" />';
+    }
+
+    function stars(rating) {
+      var full = Math.round(rating);
+      var s = '';
+      for (var i = 1; i <= 5; i++) {
+        s += '<span aria-hidden="true" class="' + (i <= full ? 'text-ember' : 'text-line') + '">&#9733;</span>';
+      }
+      return '<span class="star inline-flex items-center text-sm" role="img" aria-label="Rated ' + rating.toFixed(1) + ' out of 5">'
+        + s + '<span class="ml-1.5 text-stone text-xs font-medium">' + rating.toFixed(1) + '</span></span>';
+    }
+
+    function stockStatus(p) {
+      if (p.stock <= 0) return { label: 'Sold out', cls: 'text-ember', dot: 'bg-ember', low: false, out: true };
+      if (p.stock <= 5) return { label: 'Low stock', cls: 'text-ember', dot: 'bg-ember', low: true, out: false };
+      return { label: 'In stock', cls: 'text-forest', dot: 'bg-forest', low: false, out: false };
+    }
+
+    function cartCount() {
+      // Count only valid, in-stock units so the badge matches the cart contents.
+      return cartLinesDetailed().reduce(function (sum, l) { return sum + l.qty; }, 0);
+    }
+
+    function priceParts(p) {
+      if (isOnSale(p)) {
+        return '<span class="font-display font-bold text-ink">' + money(p.salePrice) + '</span>'
+          + ' <span class="text-stone line-through text-sm ml-1">' + money(p.price) + '</span>';
+      }
+      return '<span class="font-display font-bold text-ink">' + money(p.price) + '</span>';
+    }
+
+    /* =======================================================================
+       CART TOTALS
+       ======================================================================= */
+    function cartLinesDetailed() {
+      var cart = getCart();
+      var out = [];
+      cart.forEach(function (l) {
+        var p = getProduct(l.id);
+        if (!p) return;
+        // Never charge or display more than is currently in stock. Stock can
+        // drop (admin edit, prior order) after a line was saved to the cart.
+        if (p.stock <= 0) return; // sold out: drop the line entirely
+        var qty = Math.max(1, Math.min(l.qty, p.stock));
+        var unit = effectivePrice(p);
+        out.push({
+          id: p.id, product: p, qty: qty, unit: unit,
+          lineTotal: unit * qty, maxStock: p.stock,
+        });
+      });
+      return out;
+    }
+
+    function computeTotals() {
+      var lines = cartLinesDetailed();
+      var subtotal = lines.reduce(function (s, l) { return s + l.lineTotal; }, 0);
+      var shipping = (subtotal === 0 || subtotal >= FREE_SHIP_THRESHOLD) ? 0 : FLAT_SHIP;
+      var promo = getPromo();
+      var discount = 0;
+      if (promo === PROMO_CODE && subtotal > 0) discount = subtotal * PROMO_RATE;
+      var total = subtotal - discount + shipping;
+      return { lines: lines, subtotal: subtotal, shipping: shipping, discount: discount, total: total, promo: promo };
+    }
+
+    /* =======================================================================
+       CART MUTATIONS
+       ======================================================================= */
+    function addToCart(id, qty) {
+      qty = qty || 1;
+      var p = getProduct(id);
+      if (!p || p.stock <= 0) { toast('That item is sold out.', 'error'); return false; }
+      var cart = getCart();
+      var existing = null;
+      for (var i = 0; i < cart.length; i++) if (cart[i].id === id) existing = cart[i];
+      var current = existing ? existing.qty : 0;
+      var next = Math.min(current + qty, p.stock);
+      if (next === current) {
+        toast('Only ' + p.stock + ' in stock. Cart already at the limit.', 'error');
+        return false;
+      }
+      if (existing) existing.qty = next;
+      else cart.push({ id: id, qty: next });
+      setCart(cart);
+      return true;
+    }
+
+    function setQty(id, qty) {
+      var p = getProduct(id);
+      var cart = getCart();
+      var out = [];
+      cart.forEach(function (l) {
+        if (l.id === id) {
+          var cap = p ? p.stock : qty;
+          var q = Math.max(0, Math.min(qty, cap));
+          if (q > 0) out.push({ id: id, qty: q });
+        } else out.push(l);
+      });
+      setCart(out);
+    }
+
+    function removeFromCart(id) {
+      setCart(getCart().filter(function (l) { return l.id !== id; }));
+    }
+
+    /* =======================================================================
+       CART BADGE + DRAWER RENDER
+       ======================================================================= */
+    function updateCartBadge() {
+      var n = cartCount();
+      var badge = document.getElementById('cartCount');
+      if (n > 0) { badge.hidden = false; badge.textContent = n; }
+      else { badge.hidden = true; badge.textContent = '0'; }
+      if (cartOpen) renderCartDrawer();
+    }
+
+    function qtyStepper(id, qty, max, opts) {
+      opts = opts || {};
+      var disableMinus = qty <= 1 ? 'disabled' : '';
+      var disablePlus = qty >= max ? 'disabled' : '';
+      var size = opts.large ? 'w-10 h-10 text-base' : 'w-8 h-8 text-sm';
+      return '<div class="inline-flex items-center border border-line rounded-lg bg-white" role="group" aria-label="Quantity for ' + attr(opts.name || 'item') + '">'
+        + '<button type="button" class="' + size + ' flex items-center justify-center text-ink hover:bg-line/50 rounded-l-lg disabled:opacity-30 disabled:cursor-not-allowed" data-qty-dec="' + id + '" ' + disableMinus + ' aria-label="Decrease quantity">&minus;</button>'
+        + '<span class="px-1 min-w-[2rem] text-center font-medium tabular-nums" aria-live="polite">' + qty + '</span>'
+        + '<button type="button" class="' + size + ' flex items-center justify-center text-ink hover:bg-line/50 rounded-r-lg disabled:opacity-30 disabled:cursor-not-allowed" data-qty-inc="' + id + '" ' + disablePlus + ' aria-label="Increase quantity">+</button>'
+        + '</div>';
+    }
+
+    function renderCartDrawer() {
+      var t = computeTotals();
+      var body = document.getElementById('cartDrawerBody');
+      var foot = document.getElementById('cartDrawerFoot');
+
+      if (t.lines.length === 0) {
+        body.innerHTML = '<div class="h-full flex flex-col items-center justify-center text-center px-8 py-16">'
+          + '<div class="w-16 h-16 rounded-full bg-line/60 flex items-center justify-center mb-4">'
+          + '<svg class="w-8 h-8 text-stone" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>'
+          + '</div>'
+          + '<p class="font-display font-semibold text-lg mb-1">Your cart is empty</p>'
+          + '<p class="text-sm text-stone mb-5">Add a few favorites to get started.</p>'
+          + '<a href="#/" data-close-cart class="inline-flex px-5 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90">Browse the shop</a>'
+          + '</div>';
+        foot.innerHTML = '';
+        return;
+      }
+
+      var rows = t.lines.map(function (l) {
+        return '<li class="flex gap-3 p-4 border-b border-line">'
+          + '<a href="#/product/' + l.id + '" data-close-cart class="block w-20 h-20 rounded-lg overflow-hidden bg-line/40 shrink-0">'
+          + productImgTag(l.product, 'w-full h-full object-cover') + '</a>'
+          + '<div class="flex-1 min-w-0">'
+          + '<div class="flex items-start justify-between gap-2">'
+          + '<a href="#/product/' + l.id + '" data-close-cart class="font-medium text-sm leading-snug hover:text-forest line-clamp-2">' + esc(l.product.name) + '</a>'
+          + '<button type="button" data-remove="' + l.id + '" class="text-stone hover:text-ember p-1 -mt-1 -mr-1 shrink-0" aria-label="Remove ' + attr(l.product.name) + ' from cart">'
+          + '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>'
+          + '</div>'
+          + '<p class="text-xs text-stone mt-0.5">' + money(l.unit) + ' each</p>'
+          + '<div class="flex items-center justify-between mt-2">'
+          + qtyStepper(l.id, l.qty, l.maxStock, { name: l.product.name })
+          + '<span class="font-display font-semibold text-sm">' + money(l.lineTotal) + '</span>'
+          + '</div></div></li>';
+      }).join('');
+
+      body.innerHTML = '<ul>' + rows + '</ul>';
+
+      var shipNote = t.subtotal >= FREE_SHIP_THRESHOLD
+        ? '<span class="text-forest font-medium">Free</span>'
+        : money(t.shipping);
+      var remain = FREE_SHIP_THRESHOLD - t.subtotal;
+      var freeBar = (t.subtotal < FREE_SHIP_THRESHOLD && t.subtotal > 0)
+        ? '<p class="text-xs text-stone px-4 pt-3">Add ' + money(remain) + ' more for free shipping.</p>'
+        : '';
+
+      foot.innerHTML = freeBar
+        + '<div class="p-4 space-y-1.5 text-sm">'
+        + '<div class="flex justify-between"><span class="text-stone">Subtotal</span><span class="font-medium">' + money(t.subtotal) + '</span></div>'
+        + (t.discount > 0 ? '<div class="flex justify-between text-forest"><span>Promo ' + PROMO_CODE + '</span><span>&minus;' + money(t.discount) + '</span></div>' : '')
+        + '<div class="flex justify-between"><span class="text-stone">Shipping</span><span class="font-medium">' + shipNote + '</span></div>'
+        + '<div class="flex justify-between text-base font-display font-bold pt-1.5 border-t border-line mt-1.5"><span>Total</span><span>' + money(t.total) + '</span></div>'
+        + '<div class="grid grid-cols-2 gap-2 pt-3">'
+        + '<a href="#/cart" data-close-cart class="text-center px-4 py-2.5 rounded-xl border border-line bg-white font-display font-semibold text-sm hover:bg-cloud">View cart</a>'
+        + '<a href="#/checkout" data-close-cart class="text-center px-4 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90">Checkout</a>'
+        + '</div></div>';
+    }
+
+    /* =======================================================================
+       DRAWER OPEN / CLOSE + FOCUS TRAP
+       ======================================================================= */
+    var cartDrawer = document.getElementById('cartDrawer');
+    var cartScrim = document.getElementById('cartScrim');
+    var cartBtn = document.getElementById('cartBtn');
+    var lastFocused = null;
+
+    function trapFocus(container, e) {
+      var f = container.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      var list = [];
+      for (var i = 0; i < f.length; i++) if (f[i].offsetParent !== null) list.push(f[i]);
+      if (!list.length) return;
+      var first = list[0], last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    var cartOpen = false;
+    function openCart() {
+      if (cartOpen) { renderCartDrawer(); return; }
+      cartOpen = true;
+      renderCartDrawer();
+      lastFocused = document.activeElement;
+      cartScrim.hidden = false; cartDrawer.hidden = false;
+      cartDrawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      requestAnimationFrame(function () {
+        cartScrim.classList.remove('opacity-0'); cartScrim.classList.add('opacity-100');
+        cartScrim.style.pointerEvents = 'auto';
+        cartDrawer.classList.remove('translate-x-full');
+      });
+      cartBtn.setAttribute('aria-expanded', 'true');
+      setTimeout(function () {
+        var c = document.getElementById('cartCloseBtn');
+        if (c) c.focus();
+      }, 60);
+    }
+
+    function closeCart(keepFocus) {
+      if (!cartOpen) return;
+      cartOpen = false;
+      cartScrim.classList.add('opacity-0'); cartScrim.classList.remove('opacity-100');
+      cartScrim.style.pointerEvents = 'none';
+      cartDrawer.classList.add('translate-x-full');
+      cartDrawer.setAttribute('aria-hidden', 'true');
+      cartBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('no-scroll');
+      setTimeout(function () { cartScrim.hidden = true; cartDrawer.hidden = true; }, 340);
+      // Only pull focus back to the trigger when closing in place (button,
+      // scrim, Escape). On navigation we leave focus for the new view.
+      if (!keepFocus && lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    cartBtn.addEventListener('click', openCart);
+    document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+    cartScrim.addEventListener('click', closeCart);
+
+    /* =======================================================================
+       MODAL (admin product editor)
+       ======================================================================= */
+    var modalScrim = document.getElementById('modalScrim');
+    var modalPanel = document.getElementById('modalPanel');
+    var modalLastFocused = null;
+
+    function openModal(html) {
+      modalPanel.innerHTML = html;
+      modalLastFocused = document.activeElement;
+      modalScrim.hidden = false;
+      document.body.classList.add('no-scroll');
+      requestAnimationFrame(function () {
+        modalScrim.classList.remove('opacity-0'); modalScrim.classList.add('opacity-100');
+        modalScrim.style.pointerEvents = 'auto';
+      });
+      setTimeout(function () {
+        var first = modalPanel.querySelector('input, select, textarea, button');
+        if (first) first.focus();
+      }, 50);
+    }
+    function closeModal(keepFocus) {
+      if (modalScrim.hidden) return;
+      modalScrim.classList.add('opacity-0'); modalScrim.classList.remove('opacity-100');
+      modalScrim.style.pointerEvents = 'none';
+      document.body.classList.remove('no-scroll');
+      setTimeout(function () { modalScrim.hidden = true; modalPanel.innerHTML = ''; }, 300);
+      if (!keepFocus && modalLastFocused && modalLastFocused.focus) modalLastFocused.focus();
+    }
+    modalScrim.addEventListener('click', function (e) {
+      if (e.target === modalScrim) closeModal();
+    });
+
+    /* =======================================================================
+       TOASTS
+       ======================================================================= */
+    function toast(msg, type) {
+      var region = document.getElementById('toastRegion');
+      var el = document.createElement('div');
+      var color = type === 'error' ? 'bg-ember' : (type === 'info' ? 'bg-ink' : 'bg-forest');
+      el.className = 'toast pointer-events-auto opacity-0 translate-y-3 ' + color + ' text-white text-sm font-medium px-4 py-3 rounded-xl shadow-lift max-w-sm w-full flex items-start gap-2';
+      var icon = type === 'error'
+        ? '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 8v5M12 16h.01"/></svg>'
+        : '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+      el.innerHTML = icon + '<span>' + esc(msg) + '</span>';
+      region.appendChild(el);
+      requestAnimationFrame(function () {
+        el.classList.remove('opacity-0', 'translate-y-3');
+      });
+      setTimeout(function () {
+        el.classList.add('opacity-0', 'translate-y-3');
+        setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 320);
+      }, 2600);
+    }
+
+    /* =======================================================================
+       SEARCH + GLOBAL FILTER STATE
+       ======================================================================= */
+    var searchTerm = '';
+    function syncSearchInputs(val, except) {
+      ['searchInput', 'searchInputMobile'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el !== except) el.value = val;
+      });
+    }
+    function onSearch(e) {
+      searchTerm = e.target.value.trim().toLowerCase();
+      syncSearchInputs(e.target.value, e.target);
+      if (location.hash === '' || location.hash === '#/' || location.hash.indexOf('#/?') === 0) {
+        renderShop();
+      } else if (searchTerm) {
+        location.hash = '#/';
+      }
+    }
+    document.getElementById('searchInput').addEventListener('input', onSearch);
+    document.getElementById('searchInputMobile').addEventListener('input', onSearch);
+
+    /* =======================================================================
+       SHOP STATE (category + sort) persisted in-session
+       ======================================================================= */
+    var shopFilter = { category: 'All', sort: 'featured' };
+
+    var CATEGORIES = ['All', 'Kitchen', 'Lighting', 'Textiles', 'Decor', 'Furniture'];
+
+    function filteredSortedProducts() {
+      var list = getProducts().slice();
+      if (shopFilter.category !== 'All') {
+        list = list.filter(function (p) { return p.category === shopFilter.category; });
+      }
+      if (searchTerm) {
+        list = list.filter(function (p) {
+          return p.name.toLowerCase().indexOf(searchTerm) !== -1
+            || p.category.toLowerCase().indexOf(searchTerm) !== -1;
+        });
+      }
+      if (shopFilter.sort === 'price-asc') {
+        list.sort(function (a, b) { return effectivePrice(a) - effectivePrice(b); });
+      } else if (shopFilter.sort === 'price-desc') {
+        list.sort(function (a, b) { return effectivePrice(b) - effectivePrice(a); });
+      } else {
+        // featured: sale items + rating, then newest
+        list.sort(function (a, b) {
+          var sa = (isOnSale(a) ? 2 : 0) + (isNew(a) ? 1 : 0);
+          var sb = (isOnSale(b) ? 2 : 0) + (isNew(b) ? 1 : 0);
+          if (sb !== sa) return sb - sa;
+          if (b.rating !== a.rating) return b.rating - a.rating;
+          return b.createdAt - a.createdAt;
+        });
+      }
+      return list;
+    }
+
+    /* =======================================================================
+       PRODUCT CARD
+       ======================================================================= */
+    function productCard(p) {
+      var st = stockStatus(p);
+      var badges = '';
+      if (st.out) badges += '<span class="absolute top-3 left-3 bg-ink text-white text-[11px] font-semibold px-2 py-1 rounded-md">Sold out</span>';
+      else {
+        if (isOnSale(p)) badges += '<span class="absolute top-3 left-3 bg-ember text-white text-[11px] font-semibold px-2 py-1 rounded-md">Sale</span>';
+        if (isNew(p)) badges += '<span class="absolute top-3 ' + (isOnSale(p) ? 'left-[3.6rem]' : 'left-3') + ' bg-forest text-white text-[11px] font-semibold px-2 py-1 rounded-md">New</span>';
+      }
+      var btn = st.out
+        ? '<button type="button" disabled class="w-full mt-3 px-4 py-2.5 rounded-xl bg-line text-stone font-display font-semibold text-sm cursor-not-allowed">Sold out</button>'
+        : '<button type="button" data-add="' + p.id + '" class="w-full mt-3 px-4 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90 transition">Add to cart</button>';
+
+      return '<article class="pcard group bg-white border border-line rounded-xl overflow-hidden shadow-soft hover:shadow-lift transition flex flex-col">'
+        + '<a href="#/product/' + p.id + '" class="block relative aspect-square overflow-hidden bg-line/40 pcard-media" aria-label="View ' + attr(p.name) + '">'
+        + productImgTag(p, 'w-full h-full object-cover' + (st.out ? ' opacity-70' : ''))
+        + badges + '</a>'
+        + '<div class="p-4 flex flex-col flex-1">'
+        + '<p class="text-xs font-medium text-stone uppercase tracking-wide">' + esc(p.category) + '</p>'
+        + '<h3 class="font-display font-semibold text-[15px] leading-snug mt-1"><a href="#/product/' + p.id + '" class="hover:text-forest">' + esc(p.name) + '</a></h3>'
+        + '<div class="mt-1.5">' + stars(p.rating) + '</div>'
+        + '<div class="mt-2 flex items-center gap-1">' + priceParts(p) + '</div>'
+        + (st.low ? '<p class="text-xs text-ember font-medium mt-1">Only ' + p.stock + ' left</p>' : '')
+        + '<div class="mt-auto">' + btn + '</div>'
+        + '</div></article>';
+    }
+
+    /* =======================================================================
+       VIEW: SHOP
+       ======================================================================= */
+    function renderShop() {
+      var products = filteredSortedProducts();
+
+      var chips = CATEGORIES.map(function (c) {
+        var active = shopFilter.category === c;
+        return '<button type="button" data-cat="' + c + '" aria-pressed="' + active + '" class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border transition '
+          + (active ? 'bg-ink text-white border-ink' : 'bg-white text-ink border-line hover:border-stone') + '">' + esc(c) + '</button>';
+      }).join('');
+
+      var sortSel = '<label class="sr-only" for="sortSelect">Sort products</label>'
+        + '<select id="sortSelect" class="px-3 py-2 rounded-xl border border-line bg-white text-sm font-medium focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none">'
+        + '<option value="featured"' + (shopFilter.sort === 'featured' ? ' selected' : '') + '>Featured</option>'
+        + '<option value="price-asc"' + (shopFilter.sort === 'price-asc' ? ' selected' : '') + '>Price: low to high</option>'
+        + '<option value="price-desc"' + (shopFilter.sort === 'price-desc' ? ' selected' : '') + '>Price: high to low</option>'
+        + '</select>';
+
+      var hero = (shopFilter.category === 'All' && !searchTerm)
+        ? '<section class="relative overflow-hidden rounded-xl bg-ink text-white mb-8">'
+          + '<div class="absolute inset-0">'
+          + '<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80" alt="A calm, light filled living room styled with Halcyon pieces" class="w-full h-full object-cover opacity-55" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/halcyon-hero/1600/900\'" />'
+          + '</div>'
+          + '<div class="relative px-6 sm:px-10 py-12 sm:py-16 max-w-xl">'
+          + '<p class="text-xs font-semibold uppercase tracking-widest text-white/80 mb-3">New season &middot; Home and lifestyle</p>'
+          + '<h1 class="font-display font-extrabold text-3xl sm:text-4xl leading-tight">Considered things for everyday calm</h1>'
+          + '<p class="mt-3 text-white/85 leading-relaxed">Kitchenware, lighting, textiles, and small furniture chosen to last. Free shipping on orders over 75.</p>'
+          + '<div class="mt-6 flex flex-wrap gap-3">'
+          + '<button type="button" data-scroll-to="shopgrid" class="px-5 py-3 rounded-xl bg-white text-ink font-display font-semibold text-sm hover:bg-cloud">Shop new arrivals</button>'
+          + '<button type="button" data-cat="Lighting" class="px-5 py-3 rounded-xl bg-white/10 text-white border border-white/30 font-display font-semibold text-sm hover:bg-white/20">Browse lighting</button>'
+          + '</div></div></section>'
+        : '';
+
+      var heading = searchTerm
+        ? 'Results for ' + esc(searchTerm)
+        : (shopFilter.category === 'All' ? 'All products' : esc(shopFilter.category));
+
+      var grid = products.length
+        ? '<div class="grid gap-5 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">' + products.map(productCard).join('') + '</div>'
+        : '<div class="text-center py-20 border border-dashed border-line rounded-xl bg-white">'
+          + '<p class="font-display font-semibold text-lg">No products found</p>'
+          + '<p class="text-sm text-stone mt-1">Try a different category or clear your search.</p>'
+          + '<button type="button" id="clearFilters" class="mt-4 px-5 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90">Clear filters</button>'
+          + '</div>';
+
+      var html = '<div class="view-fade max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + hero
+        + '<div id="shopgrid" class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-5">'
+        + '<div class="-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto"><div class="flex gap-2">' + chips + '</div></div>'
+        + '<div class="flex items-center justify-between sm:justify-end gap-3 shrink-0">'
+        + '<span class="text-sm text-stone">' + products.length + ' item' + (products.length === 1 ? '' : 's') + '</span>'
+        + sortSel + '</div></div>'
+        + '<h2 class="font-display font-bold text-xl mb-4">' + heading + '</h2>'
+        + grid
+        + '</div>';
+
+      setMain(html);
+
+      // wire sort
+      var sel = document.getElementById('sortSelect');
+      if (sel) sel.addEventListener('change', function () { shopFilter.sort = this.value; renderShop(); });
+      var clr = document.getElementById('clearFilters');
+      if (clr) clr.addEventListener('click', function () {
+        shopFilter.category = 'All'; searchTerm = ''; syncSearchInputs(''); renderShop();
+      });
+    }
+
+    /* =======================================================================
+       VIEW: PRODUCT DETAIL
+       ======================================================================= */
+    var pdpQty = 1;
+
+    function renderProduct(id) {
+      var p = getProduct(id);
+      if (!p) { renderNotFound('We could not find that product.'); return; }
+      var st = stockStatus(p);
+      pdpQty = st.out ? 0 : 1;
+
+      var related = getProducts().filter(function (x) {
+        return x.id !== p.id && x.category === p.category;
+      }).slice(0, 4);
+      if (related.length < 3) {
+        getProducts().forEach(function (x) {
+          if (related.length < 4 && x.id !== p.id && related.indexOf(x) === -1) related.push(x);
+        });
+      }
+      related = related.slice(0, 4);
+
+      var badges = '';
+      if (st.out) badges += '<span class="bg-ink text-white text-xs font-semibold px-2.5 py-1 rounded-md">Sold out</span>';
+      else {
+        if (isOnSale(p)) badges += '<span class="bg-ember text-white text-xs font-semibold px-2.5 py-1 rounded-md">Sale</span>';
+        if (isNew(p)) badges += '<span class="bg-forest text-white text-xs font-semibold px-2.5 py-1 rounded-md">New</span>';
+      }
+
+      var saveAmt = isOnSale(p) ? '<p class="text-sm text-ember font-medium mt-1">You save ' + money(p.price - p.salePrice) + '</p>' : '';
+
+      var stockLine = '<div class="flex items-center gap-2 mt-4 text-sm font-medium ' + st.cls + '">'
+        + '<span class="w-2 h-2 rounded-full ' + st.dot + '"></span>'
+        + esc(st.label) + (st.low ? ' &middot; only ' + p.stock + ' left' : '') + '</div>';
+
+      var action = st.out
+        ? '<button type="button" disabled class="w-full sm:w-auto px-7 py-3 rounded-xl bg-line text-stone font-display font-semibold cursor-not-allowed">Sold out</button>'
+        : '<div class="flex flex-col sm:flex-row gap-3 mt-5">'
+          + '<div id="pdpStepper">' + qtyStepper(p.id, pdpQty, p.stock, { name: p.name, large: true }) + '</div>'
+          + '<button type="button" id="pdpAdd" class="px-7 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90 transition">Add to cart</button>'
+          + '</div>';
+
+      var relatedHtml = related.length
+        ? '<section class="mt-14"><h2 class="font-display font-bold text-xl mb-5">You may also like</h2>'
+          + '<div class="grid gap-5 grid-cols-2 lg:grid-cols-4">' + related.map(productCard).join('') + '</div></section>'
+        : '';
+
+      var html = '<div class="view-fade max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + '<a href="#/" class="inline-flex items-center gap-1.5 text-sm font-medium text-stone hover:text-forest mb-5">'
+        + '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M15 6l-6 6 6 6"/></svg> Back to shop</a>'
+        + '<div class="grid gap-8 lg:grid-cols-2">'
+        + '<div class="rounded-xl overflow-hidden bg-line/40 aspect-square">'
+        + productImgTag(p, 'w-full h-full object-cover', true) + '</div>'
+        + '<div>'
+        + '<p class="text-sm font-medium text-stone uppercase tracking-wide">' + esc(p.category) + '</p>'
+        + '<h1 class="font-display font-extrabold text-3xl mt-1 leading-tight">' + esc(p.name) + '</h1>'
+        + '<div class="flex items-center gap-3 mt-3">' + stars(p.rating) + (badges ? '<span class="flex gap-1.5">' + badges + '</span>' : '') + '</div>'
+        + '<div class="mt-4 text-2xl flex items-baseline gap-2">' + priceParts(p) + '</div>'
+        + saveAmt
+        + stockLine
+        + action
+        + '<p class="mt-6 text-stone leading-relaxed">' + esc(p.description) + '</p>'
+        + '<ul class="mt-6 grid grid-cols-2 gap-3 text-sm">'
+        + '<li class="flex items-center gap-2 text-stone"><svg class="w-4 h-4 text-forest shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Free shipping over 75</li>'
+        + '<li class="flex items-center gap-2 text-stone"><svg class="w-4 h-4 text-forest shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> 30 day easy returns</li>'
+        + '<li class="flex items-center gap-2 text-stone"><svg class="w-4 h-4 text-forest shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Carefully packed</li>'
+        + '<li class="flex items-center gap-2 text-stone"><svg class="w-4 h-4 text-forest shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Secure demo checkout</li>'
+        + '</ul>'
+        + '</div></div>'
+        + relatedHtml
+        + '</div>';
+
+      setMain(html);
+
+      var addBtn = document.getElementById('pdpAdd');
+      if (addBtn) {
+        addBtn.addEventListener('click', function () {
+          if (addToCart(p.id, pdpQty)) {
+            toast(p.name + ' added to cart.');
+            openCart();
+          }
+        });
+      }
+    }
+
+    function refreshPdpStepper(p) {
+      var wrap = document.getElementById('pdpStepper');
+      if (wrap) wrap.innerHTML = qtyStepper(p.id, pdpQty, p.stock, { name: p.name, large: true });
+    }
+
+    /* =======================================================================
+       VIEW: CART (full page)
+       ======================================================================= */
+    function renderCartPage() {
+      var t = computeTotals();
+
+      if (t.lines.length === 0) {
+        setMain('<div class="view-fade max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">'
+          + '<div class="w-16 h-16 rounded-full bg-line/60 flex items-center justify-center mx-auto mb-4">'
+          + '<svg class="w-8 h-8 text-stone" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg></div>'
+          + '<h1 class="font-display font-bold text-2xl">Your cart is empty</h1>'
+          + '<p class="text-stone mt-2">Browse the shop and add a few favorites.</p>'
+          + '<a href="#/" class="inline-flex mt-6 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Browse the shop</a>'
+          + '</div>');
+        return;
+      }
+
+      var rows = t.lines.map(function (l) {
+        return '<li class="flex gap-4 py-5 border-b border-line">'
+          + '<a href="#/product/' + l.id + '" class="block w-24 h-24 rounded-lg overflow-hidden bg-line/40 shrink-0">' + productImgTag(l.product, 'w-full h-full object-cover') + '</a>'
+          + '<div class="flex-1 min-w-0">'
+          + '<div class="flex items-start justify-between gap-3">'
+          + '<div><p class="text-xs text-stone uppercase tracking-wide">' + esc(l.product.category) + '</p>'
+          + '<a href="#/product/' + l.id + '" class="font-display font-semibold hover:text-forest">' + esc(l.product.name) + '</a>'
+          + '<p class="text-sm text-stone mt-0.5">' + money(l.unit) + ' each</p></div>'
+          + '<button type="button" data-remove="' + l.id + '" class="text-stone hover:text-ember text-sm font-medium shrink-0">Remove</button>'
+          + '</div>'
+          + '<div class="flex items-center justify-between mt-3">'
+          + qtyStepper(l.id, l.qty, l.maxStock, { name: l.product.name })
+          + '<span class="font-display font-bold">' + money(l.lineTotal) + '</span>'
+          + '</div></div></li>';
+      }).join('');
+
+      var promoVal = t.promo === PROMO_CODE ? PROMO_CODE : '';
+      var promoFeedback = t.promo === PROMO_CODE
+        ? '<p class="text-sm text-forest font-medium mt-2">Promo applied. 10 percent off your order.</p>'
+        : '';
+
+      var shipNote = t.subtotal >= FREE_SHIP_THRESHOLD ? '<span class="text-forest font-medium">Free</span>' : money(t.shipping);
+
+      var html = '<div class="view-fade max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + '<h1 class="font-display font-extrabold text-3xl mb-6">Your cart</h1>'
+        + '<div class="grid gap-8 lg:grid-cols-3">'
+        + '<div class="lg:col-span-2"><ul>' + rows + '</ul>'
+        + '<a href="#/" class="inline-flex items-center gap-1.5 text-sm font-medium text-forest hover:underline mt-5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M15 6l-6 6 6 6"/></svg> Continue shopping</a></div>'
+        + '<aside class="lg:col-span-1"><div class="bg-white border border-line rounded-xl p-5 sticky top-28">'
+        + '<h2 class="font-display font-bold text-lg mb-4">Order summary</h2>'
+        + '<form id="promoForm" class="mb-4">'
+        + '<label for="promoInput" class="block text-sm font-medium mb-1.5">Promo code</label>'
+        + '<div class="flex gap-2">'
+        + '<input id="promoInput" type="text" value="' + attr(promoVal) + '" placeholder="HALCYON10" class="flex-1 px-3 py-2 rounded-lg border border-line bg-white text-sm uppercase focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />'
+        + '<button type="submit" class="px-4 py-2 rounded-lg bg-ink text-white text-sm font-display font-semibold hover:bg-ink/90">Apply</button>'
+        + '</div>'
+        + '<div id="promoFeedback">' + promoFeedback + '</div>'
+        + '</form>'
+        + '<div class="space-y-2 text-sm border-t border-line pt-4">'
+        + '<div class="flex justify-between"><span class="text-stone">Subtotal</span><span class="font-medium">' + money(t.subtotal) + '</span></div>'
+        + (t.discount > 0 ? '<div class="flex justify-between text-forest"><span>Discount</span><span>&minus;' + money(t.discount) + '</span></div>' : '')
+        + '<div class="flex justify-between"><span class="text-stone">Shipping</span><span class="font-medium">' + shipNote + '</span></div>'
+        + (t.subtotal < FREE_SHIP_THRESHOLD ? '<p class="text-xs text-stone">Add ' + money(FREE_SHIP_THRESHOLD - t.subtotal) + ' more for free shipping.</p>' : '')
+        + '<div class="flex justify-between text-lg font-display font-bold pt-3 border-t border-line"><span>Total</span><span>' + money(t.total) + '</span></div>'
+        + '</div>'
+        + '<a href="#/checkout" class="block text-center mt-5 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Proceed to checkout</a>'
+        + '<p class="text-xs text-stone text-center mt-3">Demo checkout, no real payment is taken.</p>'
+        + '</div></aside></div></div>';
+
+      setMain(html);
+
+      var pf = document.getElementById('promoForm');
+      pf.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var code = document.getElementById('promoInput').value.trim().toUpperCase();
+        var fb = document.getElementById('promoFeedback');
+        if (code === '') {
+          setPromo(null);
+          fb.innerHTML = '<p class="text-sm text-stone mt-2">Promo removed.</p>';
+          renderCartPage();
+          return;
+        }
+        if (code === PROMO_CODE) {
+          setPromo(PROMO_CODE);
+          toast('Promo applied. 10 percent off.');
+          renderCartPage();
+        } else {
+          setPromo(null);
+          fb.innerHTML = '<p class="text-sm text-ember font-medium mt-2">That code is not valid. Try HALCYON10.</p>';
+        }
+      });
+    }
+
+    /* =======================================================================
+       VIEW: CHECKOUT
+       ======================================================================= */
+    function renderCheckout() {
+      var t = computeTotals();
+      if (t.lines.length === 0) {
+        setMain('<div class="view-fade max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">'
+          + '<h1 class="font-display font-bold text-2xl">Your cart is empty</h1>'
+          + '<p class="text-stone mt-2">Add something to your cart before checking out.</p>'
+          + '<a href="#/" class="inline-flex mt-6 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Browse the shop</a></div>');
+        return;
+      }
+
+      var summaryRows = t.lines.map(function (l) {
+        return '<li class="flex gap-3 py-3 border-b border-line">'
+          + '<div class="relative w-14 h-14 rounded-lg overflow-hidden bg-line/40 shrink-0">' + productImgTag(l.product, 'w-full h-full object-cover')
+          + '<span class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-ink text-white text-[11px] font-bold flex items-center justify-center">' + l.qty + '</span></div>'
+          + '<div class="flex-1 min-w-0"><p class="text-sm font-medium leading-snug line-clamp-2">' + esc(l.product.name) + '</p>'
+          + '<p class="text-xs text-stone">' + money(l.unit) + ' each</p></div>'
+          + '<span class="text-sm font-semibold">' + money(l.lineTotal) + '</span></li>';
+      }).join('');
+
+      var shipNote = t.subtotal >= FREE_SHIP_THRESHOLD ? '<span class="text-forest font-medium">Free</span>' : money(t.shipping);
+
+      function field(id, label, type, ph, extra) {
+        return '<div>'
+          + '<label for="' + id + '" class="block text-sm font-medium mb-1.5">' + label + '</label>'
+          + '<input id="' + id + '" name="' + id + '" type="' + type + '" placeholder="' + attr(ph) + '" ' + (extra || '') + ' class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />'
+          + '<p class="err text-xs text-ember mt-1 hidden" data-err-for="' + id + '"></p>'
+          + '</div>';
+      }
+
+      var html = '<div class="view-fade max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + '<a href="#/cart" class="inline-flex items-center gap-1.5 text-sm font-medium text-stone hover:text-forest mb-4"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M15 6l-6 6 6 6"/></svg> Back to cart</a>'
+        + '<h1 class="font-display font-extrabold text-3xl mb-6">Checkout</h1>'
+        + '<form id="checkoutForm" novalidate class="grid gap-8 lg:grid-cols-3">'
+        + '<div class="lg:col-span-2 space-y-8">'
+
+        // contact
+        + '<fieldset class="bg-white border border-line rounded-xl p-5"><legend class="font-display font-bold text-lg px-1">Contact</legend>'
+        + '<div class="mt-3">' + field('email', 'Email address', 'email', 'you@example.com', 'autocomplete="email" inputmode="email"') + '</div>'
+        + '</fieldset>'
+
+        // shipping
+        + '<fieldset class="bg-white border border-line rounded-xl p-5"><legend class="font-display font-bold text-lg px-1">Shipping address</legend>'
+        + '<div class="mt-3 grid gap-4 sm:grid-cols-2">'
+        + '<div class="sm:col-span-2">' + field('name', 'Full name', 'text', 'Alex Rivera', 'autocomplete="name"') + '</div>'
+        + '<div class="sm:col-span-2">' + field('address', 'Street address', 'text', '123 Main Street', 'autocomplete="address-line1"') + '</div>'
+        + field('city', 'City', 'text', 'Portland', 'autocomplete="address-level2"')
+        + field('postal', 'Postal code', 'text', '97204', 'autocomplete="postal-code"')
+        + '<div class="sm:col-span-2"><label for="country" class="block text-sm font-medium mb-1.5">Country</label>'
+        + '<select id="country" name="country" class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none">'
+        + '<option value="">Select a country</option>'
+        + ['United States', 'Canada', 'United Kingdom', 'Australia', 'Guatemala', 'Mexico', 'Germany', 'France'].map(function (c) { return '<option>' + c + '</option>'; }).join('')
+        + '</select><p class="err text-xs text-ember mt-1 hidden" data-err-for="country"></p></div>'
+        + '</div></fieldset>'
+
+        // payment
+        + '<fieldset class="bg-white border border-line rounded-xl p-5"><legend class="font-display font-bold text-lg px-1">Payment</legend>'
+        + '<p class="text-xs text-stone mt-2 mb-3 flex items-center gap-1.5"><svg class="w-4 h-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Demo only. Do not enter a real card. No payment is processed.</p>'
+        + '<div class="grid gap-4">'
+        + field('card', 'Card number', 'text', '4242 4242 4242 4242', 'inputmode="numeric" autocomplete="cc-number" maxlength="23"')
+        + '<div class="grid grid-cols-2 gap-4">'
+        + field('expiry', 'Expiry (MM/YY)', 'text', 'MM/YY', 'inputmode="numeric" autocomplete="cc-exp" maxlength="5"')
+        + field('cvc', 'CVC', 'text', '123', 'inputmode="numeric" autocomplete="cc-csc" maxlength="4"')
+        + '</div></div></fieldset>'
+        + '</div>'
+
+        // summary column
+        + '<aside class="lg:col-span-1"><div class="bg-white border border-line rounded-xl p-5 sticky top-28">'
+        + '<h2 class="font-display font-bold text-lg mb-2">Order summary</h2>'
+        + '<ul class="mb-4">' + summaryRows + '</ul>'
+        + '<div class="space-y-2 text-sm">'
+        + '<div class="flex justify-between"><span class="text-stone">Subtotal</span><span class="font-medium">' + money(t.subtotal) + '</span></div>'
+        + (t.discount > 0 ? '<div class="flex justify-between text-forest"><span>Discount (' + PROMO_CODE + ')</span><span>&minus;' + money(t.discount) + '</span></div>' : '')
+        + '<div class="flex justify-between"><span class="text-stone">Shipping</span><span class="font-medium">' + shipNote + '</span></div>'
+        + '<div class="flex justify-between text-lg font-display font-bold pt-3 border-t border-line mt-1"><span>Total</span><span>' + money(t.total) + '</span></div>'
+        + '</div>'
+        + '<button type="submit" class="w-full mt-5 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Place order &middot; ' + money(t.total) + '</button>'
+        + '<p class="text-xs text-stone text-center mt-3">By placing this demo order you agree it is for showcase purposes only.</p>'
+        + '</div></aside>'
+        + '</form></div>';
+
+      setMain(html);
+      wireCheckout();
+    }
+
+    function wireCheckout() {
+      var form = document.getElementById('checkoutForm');
+      var cardEl = document.getElementById('card');
+      var expEl = document.getElementById('expiry');
+      var cvcEl = document.getElementById('cvc');
+
+      // format card with spaces
+      cardEl.addEventListener('input', function () {
+        var digits = this.value.replace(/\D/g, '').slice(0, 19);
+        var parts = [];
+        for (var i = 0; i < digits.length; i += 4) parts.push(digits.slice(i, i + 4));
+        this.value = parts.join(' ');
+      });
+      // format expiry MM/YY
+      expEl.addEventListener('input', function () {
+        var d = this.value.replace(/\D/g, '').slice(0, 4);
+        if (d.length >= 3) this.value = d.slice(0, 2) + '/' + d.slice(2);
+        else this.value = d;
+      });
+      cvcEl.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 4);
+      });
+
+      function showErr(id, msg) {
+        var input = document.getElementById(id);
+        var p = form.querySelector('[data-err-for="' + id + '"]');
+        if (msg) {
+          p.textContent = msg; p.classList.remove('hidden');
+          input.classList.add('border-ember'); input.classList.remove('border-line');
+          input.setAttribute('aria-invalid', 'true');
+        } else {
+          p.textContent = ''; p.classList.add('hidden');
+          input.classList.remove('border-ember'); input.classList.add('border-line');
+          input.removeAttribute('aria-invalid');
+        }
+      }
+
+      function validate() {
+        var ok = true;
+        var v = function (id) { return document.getElementById(id).value.trim(); };
+        var firstBad = null;
+        function bad(id, msg) { showErr(id, msg); if (!firstBad) firstBad = id; ok = false; }
+
+        if (!v('email')) bad('email', 'Email is required.');
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) bad('email', 'Enter a valid email address.');
+        else showErr('email', '');
+
+        ['name', 'address', 'city', 'postal'].forEach(function (id) {
+          if (!v(id)) bad(id, 'This field is required.');
+          else showErr(id, '');
+        });
+        if (v('postal') && v('postal').replace(/\s/g, '').length < 3) bad('postal', 'Enter a valid postal code.');
+
+        if (!v('country')) bad('country', 'Select a country.');
+        else showErr('country', '');
+
+        var cardDigits = v('card').replace(/\s/g, '');
+        if (!cardDigits) bad('card', 'Card number is required.');
+        else if (cardDigits.length < 15 || cardDigits.length > 19) bad('card', 'Enter a valid card number.');
+        else showErr('card', '');
+
+        var exp = v('expiry');
+        if (!exp) bad('expiry', 'Expiry is required.');
+        else if (!/^\d{2}\/\d{2}$/.test(exp)) bad('expiry', 'Use MM/YY format.');
+        else {
+          var mm = parseInt(exp.slice(0, 2), 10);
+          var yy = parseInt(exp.slice(3, 5), 10);
+          if (mm < 1 || mm > 12) bad('expiry', 'Month must be 01 to 12.');
+          else {
+            var now = new Date();
+            var curY = now.getFullYear() % 100;
+            var curM = now.getMonth() + 1;
+            if (yy < curY || (yy === curY && mm < curM)) bad('expiry', 'Card has expired.');
+            else showErr('expiry', '');
+          }
+        }
+
+        var cvc = v('cvc');
+        if (!cvc) bad('cvc', 'CVC is required.');
+        else if (cvc.length < 3) bad('cvc', 'CVC must be 3 or 4 digits.');
+        else showErr('cvc', '');
+
+        return { ok: ok, firstBad: firstBad };
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var res = validate();
+        if (!res.ok) {
+          toast('Please fix the highlighted fields.', 'error');
+          var bad = document.getElementById(res.firstBad);
+          if (bad) bad.focus();
+          return;
+        }
+        placeOrder({
+          email: document.getElementById('email').value.trim(),
+          name: document.getElementById('name').value.trim(),
+          address: document.getElementById('address').value.trim(),
+          city: document.getElementById('city').value.trim(),
+          postal: document.getElementById('postal').value.trim(),
+          country: document.getElementById('country').value,
+        });
+      });
+    }
+
+    function placeOrder(customer) {
+      var t = computeTotals();
+      if (t.lines.length === 0) { toast('Your cart is empty.', 'error'); location.hash = '#/'; return; }
+
+      // decrement stock
+      var products = getProducts();
+      t.lines.forEach(function (l) {
+        for (var i = 0; i < products.length; i++) {
+          if (products[i].id === l.id) {
+            products[i].stock = Math.max(0, products[i].stock - l.qty);
+          }
+        }
+      });
+      setProducts(products);
+
+      // Build a guaranteed unique order id (never collides with an existing
+      // order, including the seeded examples). Start above the seed range and
+      // step forward until we find a free number.
+      var orders = getOrders();
+      var taken = {};
+      orders.forEach(function (o) { taken[o.id] = true; });
+      var n = 2100 + Math.floor(Math.random() * 7800);
+      var id = 'HAL-' + n;
+      while (taken[id]) { n++; id = 'HAL-' + n; }
+      var order = {
+        id: id,
+        date: new Date().toISOString(),
+        items: t.lines.map(function (l) {
+          return { id: l.id, name: l.product.name, price: l.unit, qty: l.qty, category: l.product.category };
+        }),
+        subtotal: Math.round(t.subtotal * 100) / 100,
+        shipping: Math.round(t.shipping * 100) / 100,
+        discount: Math.round(t.discount * 100) / 100,
+        total: Math.round(t.total * 100) / 100,
+        customer: customer,
+        status: 'Paid',
+      };
+      orders.unshift(order);
+      setOrders(orders);
+
+      setCart([]);
+      setPromo(null);
+      toast('Order placed. Thank you.');
+      location.hash = '#/order/' + id;
+    }
+
+    /* =======================================================================
+       VIEW: ORDER CONFIRMATION
+       ======================================================================= */
+    function renderOrder(id) {
+      var orders = getOrders();
+      var order = null;
+      for (var i = 0; i < orders.length; i++) if (orders[i].id === id) order = orders[i];
+      if (!order) { renderNotFound('We could not find that order.'); return; }
+
+      var itemRows = order.items.map(function (it) {
+        return '<li class="flex justify-between py-3 border-b border-line text-sm">'
+          + '<span><span class="font-medium">' + esc(it.name) + '</span> <span class="text-stone">&times; ' + it.qty + '</span></span>'
+          + '<span class="font-medium">' + money(it.price * it.qty) + '</span></li>';
+      }).join('');
+
+      var c = order.customer;
+      var shipNote = order.shipping === 0 ? '<span class="text-forest font-medium">Free</span>' : money(order.shipping);
+
+      var html = '<div class="view-fade max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">'
+        + '<div class="text-center mb-8">'
+        + '<div class="w-16 h-16 rounded-full bg-forest/10 flex items-center justify-center mx-auto mb-4">'
+        + '<svg class="w-9 h-9 text-forest" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>'
+        + '<h1 class="font-display font-extrabold text-3xl">Thank you for your order</h1>'
+        + '<p class="text-stone mt-2">A confirmation would normally be emailed to <span class="font-medium text-ink">' + esc(c.email) + '</span>.</p>'
+        + '<p class="mt-1 text-sm">Order number <span class="font-display font-bold text-ink">' + esc(order.id) + '</span></p>'
+        + '</div>'
+        + '<div class="bg-white border border-line rounded-xl p-6">'
+        + '<div class="grid gap-6 sm:grid-cols-2 mb-6">'
+        + '<div><h2 class="font-display font-semibold text-sm uppercase tracking-wide text-stone mb-2">Shipping to</h2>'
+        + '<p class="text-sm leading-relaxed">' + esc(c.name) + '<br>' + esc(c.address) + '<br>' + esc(c.city) + ', ' + esc(c.postal) + '<br>' + esc(c.country) + '</p></div>'
+        + '<div><h2 class="font-display font-semibold text-sm uppercase tracking-wide text-stone mb-2">Order details</h2>'
+        + '<p class="text-sm leading-relaxed">Placed ' + new Date(order.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+        + '<br>Status <span class="inline-flex items-center gap-1 font-medium text-forest">' + esc(order.status) + '</span></p></div>'
+        + '</div>'
+        + '<h2 class="font-display font-semibold text-sm uppercase tracking-wide text-stone mb-1">Items</h2>'
+        + '<ul class="mb-4">' + itemRows + '</ul>'
+        + '<div class="space-y-2 text-sm">'
+        + '<div class="flex justify-between"><span class="text-stone">Subtotal</span><span>' + money(order.subtotal) + '</span></div>'
+        + (order.discount > 0 ? '<div class="flex justify-between text-forest"><span>Discount</span><span>&minus;' + money(order.discount) + '</span></div>' : '')
+        + '<div class="flex justify-between"><span class="text-stone">Shipping</span><span>' + shipNote + '</span></div>'
+        + '<div class="flex justify-between text-lg font-display font-bold pt-2 border-t border-line"><span>Total paid</span><span>' + money(order.total) + '</span></div>'
+        + '</div></div>'
+        + '<div class="flex flex-wrap gap-3 justify-center mt-8">'
+        + '<a href="#/orders" class="px-6 py-3 rounded-xl bg-ink text-white font-display font-semibold hover:bg-ink/90">View all orders</a>'
+        + '<a href="#/" class="px-6 py-3 rounded-xl border border-line bg-white font-display font-semibold hover:bg-cloud">Continue shopping</a>'
+        + '</div></div>';
+
+      setMain(html);
+    }
+
+    /* =======================================================================
+       VIEW: ORDERS HISTORY
+       ======================================================================= */
+    function renderOrders() {
+      var orders = getOrders();
+      if (orders.length === 0) {
+        setMain('<div class="view-fade max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">'
+          + '<h1 class="font-display font-bold text-2xl">No orders yet</h1>'
+          + '<p class="text-stone mt-2">When you place an order it will appear here.</p>'
+          + '<a href="#/" class="inline-flex mt-6 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Start shopping</a></div>');
+        return;
+      }
+
+      var cards = orders.map(function (o) {
+        var count = o.items.reduce(function (s, it) { return s + it.qty; }, 0);
+        var thumbs = o.items.slice(0, 4).map(function (it) {
+          var p = getProduct(it.id);
+          var src = p ? p.image.src : 'https://picsum.photos/seed/' + esc(it.id) + '/200/200';
+          var seed = p ? p.image.seed : it.id;
+          return '<div class="w-12 h-12 rounded-lg overflow-hidden bg-line/40 border border-line"><img src="' + attr(src) + '" alt="' + attr(it.name) + '" loading="lazy" class="w-full h-full object-cover" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/' + esc(seed) + '/200/200\'" /></div>';
+        }).join('');
+        var statusCls = o.status === 'Fulfilled' ? 'bg-forest/10 text-forest' : 'bg-ember/10 text-ember';
+
+        return '<article class="bg-white border border-line rounded-xl p-5">'
+          + '<div class="flex flex-wrap items-center justify-between gap-3 mb-4">'
+          + '<div><p class="font-display font-bold">' + esc(o.id) + '</p>'
+          + '<p class="text-sm text-stone">' + new Date(o.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) + ' &middot; ' + count + ' item' + (count === 1 ? '' : 's') + '</p></div>'
+          + '<span class="text-xs font-semibold px-3 py-1 rounded-full ' + statusCls + '">' + esc(o.status) + '</span>'
+          + '</div>'
+          + '<div class="flex items-center justify-between gap-4">'
+          + '<div class="flex gap-2">' + thumbs + (o.items.length > 4 ? '<div class="w-12 h-12 rounded-lg bg-line/60 flex items-center justify-center text-xs font-medium text-stone">+' + (o.items.length - 4) + '</div>' : '') + '</div>'
+          + '<div class="text-right"><p class="font-display font-bold text-lg">' + money(o.total) + '</p>'
+          + '<a href="#/order/' + o.id + '" class="text-sm font-medium text-forest hover:underline">View details</a></div>'
+          + '</div></article>';
+      }).join('');
+
+      setMain('<div class="view-fade max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + '<h1 class="font-display font-extrabold text-3xl mb-6">Your orders</h1>'
+        + '<div class="space-y-4">' + cards + '</div></div>');
+    }
+
+    /* =======================================================================
+       VIEW: ADMIN
+       ======================================================================= */
+    var adminTab = 'dashboard';
+
+    function isAdmin() { return read(K.admin, false) === true; }
+
+    function renderAdmin() {
+      if (!isAdmin()) { renderAdminGate(); return; }
+
+      var nav = [
+        { id: 'dashboard', label: 'Dashboard' },
+        { id: 'products', label: 'Products' },
+        { id: 'orders', label: 'Orders' },
+      ].map(function (t) {
+        var active = adminTab === t.id;
+        return '<button type="button" data-admin-tab="' + t.id + '" aria-current="' + (active ? 'page' : 'false') + '" class="text-left px-4 py-2.5 rounded-lg text-sm font-medium transition '
+          + (active ? 'bg-forest text-white' : 'text-ink hover:bg-line/60') + '">' + t.label + '</button>';
+      }).join('');
+
+      var body = adminTab === 'products' ? adminProducts()
+        : adminTab === 'orders' ? adminOrders()
+        : adminDashboard();
+
+      var html = '<div class="view-fade max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">'
+        + '<div class="flex flex-wrap items-center justify-between gap-3 mb-6">'
+        + '<div><p class="text-xs font-semibold uppercase tracking-widest text-forest">Halcyon admin</p>'
+        + '<h1 class="font-display font-extrabold text-3xl">Store dashboard</h1></div>'
+        + '<button type="button" id="adminLogout" class="px-4 py-2 rounded-xl border border-line bg-white text-sm font-display font-semibold hover:bg-cloud">Log out</button>'
+        + '</div>'
+        + '<div class="grid gap-6 lg:grid-cols-[200px_1fr]">'
+        + '<nav class="flex lg:flex-col gap-2 overflow-x-auto" aria-label="Admin sections">' + nav + '</nav>'
+        + '<div>' + body + '</div>'
+        + '</div></div>';
+
+      setMain(html);
+      wireAdmin();
+    }
+
+    function renderAdminGate() {
+      var html = '<div class="view-fade max-w-md mx-auto px-4 sm:px-6 py-16">'
+        + '<div class="bg-white border border-line rounded-xl p-7 shadow-soft">'
+        + '<div class="w-12 h-12 rounded-xl bg-forest/10 flex items-center justify-center mb-4">'
+        + '<svg class="w-6 h-6 text-forest" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>'
+        + '<h1 class="font-display font-extrabold text-2xl">Admin access</h1>'
+        + '<p class="text-stone text-sm mt-1.5">Enter the passcode to manage products and orders.</p>'
+        + '<form id="adminGateForm" class="mt-5" novalidate>'
+        + '<label for="adminCode" class="block text-sm font-medium mb-1.5">Passcode</label>'
+        + '<input id="adminCode" type="password" autocomplete="off" class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />'
+        + '<p id="adminErr" class="text-sm text-ember mt-2 hidden">That passcode is not correct. Try again.</p>'
+        + '<button type="submit" class="w-full mt-4 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Enter admin</button>'
+        + '</form>'
+        + '<p class="mt-4 text-xs text-stone bg-cloud border border-line rounded-lg px-3 py-2">Demo passcode: <span class="font-mono font-semibold text-ink">admin</span></p>'
+        + '<a href="#/" class="inline-block mt-4 text-sm text-stone hover:text-forest">Back to shop</a>'
+        + '</div></div>';
+      setMain(html);
+
+      var form = document.getElementById('adminGateForm');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var val = document.getElementById('adminCode').value;
+        if (val === ADMIN_CODE) {
+          write(K.admin, true);
+          toast('Welcome to admin.');
+          adminTab = 'dashboard';
+          renderAdmin();
+        } else {
+          document.getElementById('adminErr').classList.remove('hidden');
+          document.getElementById('adminCode').focus();
+        }
+      });
+    }
+
+    function adminStats() {
+      var products = getProducts();
+      var orders = getOrders();
+      // Coerce defensively so a single bad record can never turn a stat into NaN.
+      var units = products.reduce(function (s, p) {
+        var n = Number(p.stock); return s + (isNaN(n) ? 0 : n);
+      }, 0);
+      var revenue = orders.reduce(function (s, o) {
+        var n = Number(o.total); return s + (isNaN(n) ? 0 : n);
+      }, 0);
+      // Round revenue to cents so summed floats never carry drift into the stat.
+      revenue = Math.round(revenue * 100) / 100;
+      var lowStock = products.filter(function (p) {
+        var n = Number(p.stock); return !isNaN(n) && n <= 5;
+      });
+      return {
+        productCount: products.length,
+        units: units,
+        orderCount: orders.length,
+        revenue: revenue,
+        lowStock: lowStock,
+      };
+    }
+
+    function adminDashboard() {
+      var s = adminStats();
+      function stat(label, value, accent) {
+        return '<div class="bg-white border border-line rounded-xl p-5">'
+          + '<p class="text-sm text-stone">' + label + '</p>'
+          + '<p class="font-display font-extrabold text-2xl mt-1 ' + (accent || '') + '">' + value + '</p></div>';
+      }
+
+      var lowRows = s.lowStock.length
+        ? s.lowStock.sort(function (a, b) { return a.stock - b.stock; }).map(function (p) {
+            var tag = p.stock <= 0 ? '<span class="text-xs font-semibold text-ember">Sold out</span>' : '<span class="text-xs font-semibold text-ember">' + p.stock + ' left</span>';
+            return '<li class="flex items-center gap-3 py-2.5 border-b border-line last:border-0">'
+              + '<div class="w-10 h-10 rounded-lg overflow-hidden bg-line/40 shrink-0">' + productImgTag(p, 'w-full h-full object-cover') + '</div>'
+              + '<div class="flex-1 min-w-0"><p class="text-sm font-medium truncate">' + esc(p.name) + '</p><p class="text-xs text-stone">' + esc(p.category) + '</p></div>'
+              + tag + '</li>';
+          }).join('')
+        : '<li class="py-3 text-sm text-stone">Everything is well stocked.</li>';
+
+      return '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">'
+        + stat('Total products', s.productCount)
+        + stat('Units in stock', s.units)
+        + stat('Orders', s.orderCount)
+        + stat('Total revenue', money(s.revenue), 'text-forest')
+        + stat('Low stock items', s.lowStock.length, s.lowStock.length ? 'text-ember' : '')
+        + '</div>'
+        + '<div class="bg-white border border-line rounded-xl p-5">'
+        + '<h2 class="font-display font-bold text-lg mb-1">Low stock</h2>'
+        + '<p class="text-sm text-stone mb-3">Items with five or fewer in stock.</p>'
+        + '<ul>' + lowRows + '</ul></div>';
+    }
+
+    function adminProducts() {
+      var products = getProducts().slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+      var rows = products.map(function (p) {
+        var st = stockStatus(p);
+        var rowCls = p.stock <= 0 ? 'bg-ember/5' : (p.stock <= 5 ? 'bg-ember/[0.03]' : '');
+        var statusBadge = '<span class="inline-flex items-center gap-1.5 text-xs font-medium ' + st.cls + '"><span class="w-1.5 h-1.5 rounded-full ' + st.dot + '"></span>' + esc(st.label) + '</span>';
+        return '<tr class="border-b border-line ' + rowCls + '">'
+          + '<td class="py-3 pr-3"><div class="flex items-center gap-3"><div class="w-11 h-11 rounded-lg overflow-hidden bg-line/40 shrink-0">' + productImgTag(p, 'w-full h-full object-cover') + '</div>'
+          + '<span class="font-medium text-sm">' + esc(p.name) + '</span></div></td>'
+          + '<td class="py-3 px-3 text-sm text-stone hidden sm:table-cell">' + esc(p.category) + '</td>'
+          + '<td class="py-3 px-3 text-sm">' + money(p.price) + '</td>'
+          + '<td class="py-3 px-3 text-sm hidden md:table-cell">' + (isOnSale(p) ? '<span class="text-ember font-medium">' + money(p.salePrice) + '</span>' : '<span class="text-stone" aria-label="No sale price">&middot;</span>') + '</td>'
+          + '<td class="py-3 px-3 text-sm font-medium ' + (p.stock <= 5 ? 'text-ember' : '') + '">' + p.stock + '</td>'
+          + '<td class="py-3 px-3 hidden sm:table-cell">' + statusBadge + '</td>'
+          + '<td class="py-3 pl-3 text-right whitespace-nowrap">'
+          + '<button type="button" data-edit-product="' + p.id + '" class="text-sm font-medium text-forest hover:underline">Edit</button>'
+          + '<button type="button" data-delete-product="' + p.id + '" class="text-sm font-medium text-ember hover:underline ml-3">Delete</button>'
+          + '</td></tr>';
+      }).join('');
+
+      return '<div class="flex items-center justify-between mb-4">'
+        + '<h2 class="font-display font-bold text-xl">Products</h2>'
+        + '<button type="button" id="addProductBtn" class="px-4 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90">Add product</button>'
+        + '</div>'
+        + '<div class="bg-white border border-line rounded-xl overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[640px]">'
+        + '<thead><tr class="text-xs uppercase tracking-wide text-stone border-b border-line">'
+        + '<th class="py-3 pr-3 font-semibold">Product</th>'
+        + '<th class="py-3 px-3 font-semibold hidden sm:table-cell">Category</th>'
+        + '<th class="py-3 px-3 font-semibold">Price</th>'
+        + '<th class="py-3 px-3 font-semibold hidden md:table-cell">Sale</th>'
+        + '<th class="py-3 px-3 font-semibold">Stock</th>'
+        + '<th class="py-3 px-3 font-semibold hidden sm:table-cell">Status</th>'
+        + '<th class="py-3 pl-3 font-semibold text-right">Actions</th>'
+        + '</tr></thead><tbody>' + rows + '</tbody></table></div></div>'
+        + '<div class="mt-6 bg-white border border-line rounded-xl p-5">'
+        + '<h3 class="font-display font-bold">Reset demo data</h3>'
+        + '<p class="text-sm text-stone mt-1">Restore the original products and example orders, and clear the cart. This data is demo only and stored in your browser.</p>'
+        + '<button type="button" id="resetDemoBtn" class="mt-3 px-4 py-2.5 rounded-xl border border-ember text-ember font-display font-semibold text-sm hover:bg-ember/5">Reset demo data</button>'
+        + '</div>';
+    }
+
+    function productForm(p) {
+      var editing = !!p;
+      p = p || { id: '', name: '', category: 'Kitchen', price: '', salePrice: '', stock: '', image: { src: '', seed: '' }, description: '' };
+      var cats = ['Kitchen', 'Lighting', 'Textiles', 'Decor', 'Furniture'];
+      var catOpts = cats.map(function (c) { return '<option' + (p.category === c ? ' selected' : '') + '>' + c + '</option>'; }).join('');
+
+      function row(id, label, val, type, extra) {
+        return '<div>'
+          + '<label for="f_' + id + '" class="block text-sm font-medium mb-1.5">' + label + '</label>'
+          + '<input id="f_' + id + '" type="' + type + '" value="' + attr(val == null ? '' : val) + '" ' + (extra || '') + ' class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none" />'
+          + '<p class="text-xs text-ember mt-1 hidden" data-ferr="' + id + '"></p></div>';
+      }
+
+      return '<form id="productForm" novalidate>'
+        + '<div class="flex items-center justify-between px-5 py-4 border-b border-line">'
+        + '<h2 id="modalTitle" class="font-display font-bold text-lg">' + (editing ? 'Edit product' : 'Add product') + '</h2>'
+        + '<button type="button" id="modalCloseBtn" class="p-2 -mr-2 rounded-lg hover:bg-line/60" aria-label="Close">'
+        + '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
+        + '<div class="p-5 space-y-4 max-h-[70vh] overflow-y-auto">'
+        + row('name', 'Product name', p.name, 'text')
+        + '<div><label for="f_category" class="block text-sm font-medium mb-1.5">Category</label>'
+        + '<select id="f_category" class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none">' + catOpts + '</select></div>'
+        + '<div class="grid grid-cols-2 gap-4">'
+        + row('price', 'Price', p.price, 'number', 'min="0" step="0.01" inputmode="decimal"')
+        + row('salePrice', 'Sale price (optional)', (p.salePrice == null ? '' : p.salePrice), 'number', 'min="0" step="0.01" inputmode="decimal"')
+        + '</div>'
+        + row('stock', 'Stock', p.stock, 'number', 'min="0" step="1" inputmode="numeric"')
+        + row('image', 'Image URL', p.image ? p.image.src : '', 'url')
+        + '<div><label for="f_description" class="block text-sm font-medium mb-1.5">Description</label>'
+        + '<textarea id="f_description" rows="3" class="w-full px-3 py-2.5 rounded-lg border border-line bg-white text-sm focus:border-forest focus:ring-2 focus:ring-forest/20 outline-none">' + esc(p.description) + '</textarea>'
+        + '<p class="text-xs text-ember mt-1 hidden" data-ferr="description"></p></div>'
+        + '</div>'
+        + '<div class="flex gap-3 px-5 py-4 border-t border-line">'
+        + '<button type="button" id="modalCancelBtn" class="flex-1 px-4 py-2.5 rounded-xl border border-line bg-white font-display font-semibold text-sm hover:bg-cloud">Cancel</button>'
+        + '<button type="submit" class="flex-1 px-4 py-2.5 rounded-xl bg-forest text-white font-display font-semibold text-sm hover:bg-forest/90">' + (editing ? 'Save changes' : 'Add product') + '</button>'
+        + '</div>'
+        + '<input type="hidden" id="f_id" value="' + attr(p.id) + '" />'
+        + '<input type="hidden" id="f_seed" value="' + attr(p.image ? p.image.seed : '') + '" />'
+        + '<input type="hidden" id="f_createdAt" value="' + attr(p.createdAt || '') + '" />'
+        + '<input type="hidden" id="f_rating" value="' + attr(p.rating || '') + '" />'
+        + '</form>';
+    }
+
+    function openProductEditor(id) {
+      var p = id ? getProduct(id) : null;
+      openModal(productForm(p));
+      document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+      document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
+
+      var form = document.getElementById('productForm');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = document.getElementById('f_name').value.trim();
+        var category = document.getElementById('f_category').value;
+        var priceRaw = document.getElementById('f_price').value;
+        var saleRaw = document.getElementById('f_salePrice').value.trim();
+        var stockRaw = document.getElementById('f_stock').value;
+        var imageUrl = document.getElementById('f_image').value.trim();
+        var description = document.getElementById('f_description').value.trim();
+
+        function setErr(field, msg) {
+          var el = form.querySelector('[data-ferr="' + field + '"]');
+          if (!el) return;
+          if (msg) { el.textContent = msg; el.classList.remove('hidden'); }
+          else { el.textContent = ''; el.classList.add('hidden'); }
+        }
+
+        var ok = true, firstBad = null;
+        function bad(field, inputId, msg) { setErr(field, msg); ok = false; if (!firstBad) firstBad = inputId; }
+
+        if (!name) bad('name', 'f_name', 'Name is required.'); else setErr('name', '');
+        var price = parseFloat(priceRaw);
+        if (priceRaw === '' || isNaN(price) || price < 0) bad('price', 'f_price', 'Enter a valid price.'); else setErr('price', '');
+        var stock = parseInt(stockRaw, 10);
+        if (stockRaw === '' || isNaN(stock) || stock < 0) bad('stock', 'f_stock', 'Enter a valid stock amount.'); else setErr('stock', '');
+
+        var salePrice = null;
+        if (saleRaw !== '') {
+          salePrice = parseFloat(saleRaw);
+          if (isNaN(salePrice) || salePrice < 0) bad('salePrice', 'f_salePrice', 'Enter a valid sale price.');
+          else if (!isNaN(price) && salePrice >= price) bad('salePrice', 'f_salePrice', 'Sale price must be below the price.');
+          else setErr('salePrice', '');
+        } else setErr('salePrice', '');
+
+        if (!description) bad('description', 'f_description', 'Description is required.'); else setErr('description', '');
+
+        if (!ok) {
+          var b = document.getElementById(firstBad);
+          if (b) b.focus();
+          return;
+        }
+
+        var editId = document.getElementById('f_id').value;
+        var products = getProducts();
+        var existing = editId ? getProduct(editId) : null;
+        var seed = document.getElementById('f_seed').value || ('admin-' + Math.random().toString(36).slice(2, 8));
+        var src = imageUrl || 'https://picsum.photos/seed/' + seed + '/900/900';
+
+        var record = {
+          id: editId || ('p' + Date.now().toString(36)),
+          name: name,
+          category: category,
+          price: Math.round(price * 100) / 100,
+          salePrice: salePrice == null ? null : Math.round(salePrice * 100) / 100,
+          stock: stock,
+          rating: existing ? existing.rating : 4.6,
+          createdAt: existing ? existing.createdAt : Date.now(),
+          image: { src: src, seed: seed },
+          description: description,
+        };
+
+        if (existing) {
+          for (var i = 0; i < products.length; i++) if (products[i].id === editId) products[i] = record;
+        } else {
+          products.push(record);
+        }
+        setProducts(products);
+        closeModal();
+        toast(existing ? 'Product updated.' : 'Product added.');
+        renderAdmin();
+      });
+    }
+
+    function confirmDeleteProduct(id) {
+      var p = getProduct(id);
+      if (!p) return;
+      var html = '<div class="p-6">'
+        + '<h2 id="modalTitle" class="font-display font-bold text-lg">Delete product</h2>'
+        + '<p class="text-sm text-stone mt-2">Are you sure you want to delete <span class="font-medium text-ink">' + esc(p.name) + '</span>? This removes it from the storefront immediately.</p>'
+        + '<div class="flex gap-3 mt-5">'
+        + '<button type="button" id="delCancel" class="flex-1 px-4 py-2.5 rounded-xl border border-line bg-white font-display font-semibold text-sm hover:bg-cloud">Cancel</button>'
+        + '<button type="button" id="delConfirm" class="flex-1 px-4 py-2.5 rounded-xl bg-ember text-white font-display font-semibold text-sm hover:bg-ember/90">Delete</button>'
+        + '</div></div>';
+      openModal(html);
+      document.getElementById('delCancel').addEventListener('click', closeModal);
+      document.getElementById('delConfirm').addEventListener('click', function () {
+        setProducts(getProducts().filter(function (x) { return x.id !== id; }));
+        // also drop from cart if present
+        setCart(getCart().filter(function (l) { return l.id !== id; }));
+        closeModal();
+        toast('Product deleted.', 'info');
+        renderAdmin();
+      });
+    }
+
+    function adminOrders() {
+      var orders = getOrders();
+      if (orders.length === 0) {
+        return '<h2 class="font-display font-bold text-xl mb-4">Orders</h2>'
+          + '<div class="bg-white border border-line rounded-xl p-8 text-center text-stone">No orders yet.</div>';
+      }
+      var rows = orders.map(function (o) {
+        var count = o.items.reduce(function (s, it) { return s + it.qty; }, 0);
+        var statusCls = o.status === 'Fulfilled' ? 'bg-forest/10 text-forest' : 'bg-ember/10 text-ember';
+        var action = o.status === 'Fulfilled'
+          ? '<span class="text-xs text-stone">Fulfilled</span>'
+          : '<button type="button" data-fulfill="' + o.id + '" class="text-sm font-medium text-forest hover:underline">Mark fulfilled</button>';
+        return '<tr class="border-b border-line">'
+          + '<td class="py-3 pr-3 font-medium text-sm">' + esc(o.id) + '</td>'
+          + '<td class="py-3 px-3 text-sm text-stone whitespace-nowrap">' + new Date(o.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) + '</td>'
+          + '<td class="py-3 px-3 text-sm hidden sm:table-cell">' + esc(o.customer.name) + '</td>'
+          + '<td class="py-3 px-3 text-sm text-center">' + count + '</td>'
+          + '<td class="py-3 px-3 text-sm font-medium">' + money(o.total) + '</td>'
+          + '<td class="py-3 px-3"><span class="text-xs font-semibold px-2.5 py-1 rounded-full ' + statusCls + '">' + esc(o.status) + '</span></td>'
+          + '<td class="py-3 pl-3 text-right whitespace-nowrap">' + action
+          + '<a href="#/order/' + o.id + '" class="text-sm font-medium text-stone hover:text-forest ml-3">View</a></td>'
+          + '</tr>';
+      }).join('');
+
+      return '<h2 class="font-display font-bold text-xl mb-4">Orders</h2>'
+        + '<div class="bg-white border border-line rounded-xl overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[680px]">'
+        + '<thead><tr class="text-xs uppercase tracking-wide text-stone border-b border-line">'
+        + '<th class="py-3 pr-3 font-semibold">Order</th>'
+        + '<th class="py-3 px-3 font-semibold">Date</th>'
+        + '<th class="py-3 px-3 font-semibold hidden sm:table-cell">Customer</th>'
+        + '<th class="py-3 px-3 font-semibold text-center">Items</th>'
+        + '<th class="py-3 px-3 font-semibold">Total</th>'
+        + '<th class="py-3 px-3 font-semibold">Status</th>'
+        + '<th class="py-3 pl-3 font-semibold text-right">Actions</th>'
+        + '</tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+    }
+
+    function wireAdmin() {
+      var logout = document.getElementById('adminLogout');
+      if (logout) logout.addEventListener('click', function () {
+        write(K.admin, false);
+        toast('Logged out of admin.', 'info');
+        renderAdminGate();
+      });
+
+      document.querySelectorAll('[data-admin-tab]').forEach(function (btn) {
+        btn.addEventListener('click', function () { adminTab = this.getAttribute('data-admin-tab'); renderAdmin(); });
+      });
+
+      var addBtn = document.getElementById('addProductBtn');
+      if (addBtn) addBtn.addEventListener('click', function () { openProductEditor(null); });
+
+      document.querySelectorAll('[data-edit-product]').forEach(function (btn) {
+        btn.addEventListener('click', function () { openProductEditor(this.getAttribute('data-edit-product')); });
+      });
+      document.querySelectorAll('[data-delete-product]').forEach(function (btn) {
+        btn.addEventListener('click', function () { confirmDeleteProduct(this.getAttribute('data-delete-product')); });
+      });
+
+      var resetBtn = document.getElementById('resetDemoBtn');
+      if (resetBtn) resetBtn.addEventListener('click', function () {
+        var html = '<div class="p-6">'
+          + '<h2 id="modalTitle" class="font-display font-bold text-lg">Reset demo data</h2>'
+          + '<p class="text-sm text-stone mt-2">This restores the original products and example orders and clears your cart. Your changes will be lost. This data is demo only and stored in your browser.</p>'
+          + '<div class="flex gap-3 mt-5">'
+          + '<button type="button" id="resetCancel" class="flex-1 px-4 py-2.5 rounded-xl border border-line bg-white font-display font-semibold text-sm hover:bg-cloud">Cancel</button>'
+          + '<button type="button" id="resetConfirm" class="flex-1 px-4 py-2.5 rounded-xl bg-ember text-white font-display font-semibold text-sm hover:bg-ember/90">Reset data</button>'
+          + '</div></div>';
+        openModal(html);
+        document.getElementById('resetCancel').addEventListener('click', closeModal);
+        document.getElementById('resetConfirm').addEventListener('click', function () {
+          resetDemo();
+          updateCartBadge();
+          closeModal();
+          toast('Demo data reset.');
+          adminTab = 'dashboard';
+          renderAdmin();
+        });
+      });
+
+      document.querySelectorAll('[data-fulfill]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var oid = this.getAttribute('data-fulfill');
+          var orders = getOrders();
+          for (var i = 0; i < orders.length; i++) if (orders[i].id === oid) orders[i].status = 'Fulfilled';
+          setOrders(orders);
+          toast('Order ' + oid + ' marked fulfilled.');
+          renderAdmin();
+        });
+      });
+    }
+
+    /* =======================================================================
+       NOT FOUND
+       ======================================================================= */
+    function renderNotFound(msg) {
+      setMain('<div class="view-fade max-w-xl mx-auto px-4 sm:px-6 py-20 text-center">'
+        + '<p class="text-xs font-semibold uppercase tracking-widest text-forest">Halcyon</p>'
+        + '<h1 class="font-display font-extrabold text-3xl mt-2">Page not found</h1>'
+        + '<p class="text-stone mt-2">' + esc(msg || 'We could not find what you were looking for.') + '</p>'
+        + '<a href="#/" class="inline-flex mt-6 px-6 py-3 rounded-xl bg-forest text-white font-display font-semibold hover:bg-forest/90">Back to shop</a></div>');
+    }
+
+    /* =======================================================================
+       MAIN SETTER + ROUTER
+       ======================================================================= */
+    var mainEl = document.getElementById('main');
+    function setMain(html) {
+      mainEl.innerHTML = html;
+    }
+
+    function route() {
+      // Close any transient UI so back/forward and deep links land on a clean
+      // view (the drawer/menu must never linger over a route they do not belong to).
+      if (typeof closeMobileMenu === 'function') closeMobileMenu(false);
+      if (cartOpen) closeCart(true);
+      if (modalScrim && !modalScrim.hidden) closeModal(true);
+
+      var hash = location.hash || '#/';
+
+      // A bare in-page anchor (for example "#shopgrid") is not an app route.
+      // Leave the current view in place and let the browser scroll to it, so a
+      // stray anchor never lands the visitor on Page not found.
+      if (hash.charAt(0) === '#' && hash.charAt(1) !== '/' && hash.length > 1) {
+        if (mainEl.children.length === 0) renderShop();
+        return;
+      }
+
+      // clear search highlighting when leaving shop is handled in onSearch
+      var parts = hash.replace(/^#\/?/, '').split('/'); // e.g. product/p1 -> ['product','p1']
+      var base = (parts[0] || '').toLowerCase();
+      var arg = parts[1];
+      if (arg) { try { arg = decodeURIComponent(arg); } catch (e) {} }
+
+      if (base === '' ) {
+        renderShop();
+      } else if (base === 'product') {
+        renderProduct(arg);
+      } else if (base === 'cart') {
+        renderCartPage();
+      } else if (base === 'checkout') {
+        renderCheckout();
+      } else if (base === 'order') {
+        renderOrder(arg);
+      } else if (base === 'orders') {
+        renderOrders();
+      } else if (base === 'admin') {
+        renderAdmin();
+      } else {
+        renderNotFound();
+      }
+
+      // scroll to top on navigation
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    /* =======================================================================
+       GLOBAL DELEGATED EVENTS (add, qty, remove, category, close-cart)
+       ======================================================================= */
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('[data-add], [data-qty-inc], [data-qty-dec], [data-remove], [data-cat], [data-close-cart], [data-scroll-to]');
+      if (!t) return;
+
+      // close cart on internal links
+      if (t.hasAttribute('data-close-cart')) {
+        closeCart(true);
+        return; // let navigation proceed, route() handles the new view focus
+      }
+
+      // smooth scroll to an in-page section without changing the route
+      if (t.hasAttribute('data-scroll-to')) {
+        e.preventDefault();
+        var target = document.getElementById(t.getAttribute('data-scroll-to'));
+        if (target) {
+          var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+        return;
+      }
+
+      if (t.hasAttribute('data-add')) {
+        e.preventDefault();
+        var id = t.getAttribute('data-add');
+        var p = getProduct(id);
+        if (addToCart(id, 1)) { toast((p ? p.name : 'Item') + ' added to cart.'); openCart(); }
+        return;
+      }
+
+      if (t.hasAttribute('data-cat')) {
+        e.preventDefault();
+        shopFilter.category = t.getAttribute('data-cat');
+        searchTerm = ''; syncSearchInputs('');
+        if (location.hash !== '#/' && location.hash !== '') location.hash = '#/';
+        else renderShop();
+        return;
+      }
+
+      if (t.hasAttribute('data-remove')) {
+        e.preventDefault();
+        var rid = t.getAttribute('data-remove');
+        removeFromCart(rid);
+        toast('Removed from cart.', 'info');
+        rerenderCartViews();
+        return;
+      }
+
+      if (t.hasAttribute('data-qty-inc') || t.hasAttribute('data-qty-dec')) {
+        e.preventDefault();
+        var pid = t.getAttribute('data-qty-inc') || t.getAttribute('data-qty-dec');
+        var inc = t.hasAttribute('data-qty-inc');
+
+        // PDP stepper (product not yet in cart) special-cases on detail page
+        var onPdp = location.hash.indexOf('#/product/') === 0;
+        var prod = getProduct(pid);
+        if (onPdp && prod) {
+          // is this the pdp stepper (inside #pdpStepper)?
+          if (t.closest('#pdpStepper')) {
+            pdpQty = Math.max(1, Math.min(pdpQty + (inc ? 1 : -1), prod.stock));
+            refreshPdpStepper(prod);
+            return;
+          }
+        }
+
+        // cart steppers: base the current value on the clamped, in-stock
+        // quantity so a single click always makes a visible, correct change
+        // even if the stored quantity was stale (stock dropped after saving).
+        var cart = getCart();
+        var cur = 0;
+        for (var i = 0; i < cart.length; i++) if (cart[i].id === pid) cur = cart[i].qty;
+        if (prod) cur = Math.min(cur, prod.stock);
+        var next = cur + (inc ? 1 : -1);
+        setQty(pid, next);
+        rerenderCartViews();
+        return;
+      }
+    });
+
+    function rerenderCartViews() {
+      if (cartOpen) renderCartDrawer();
+      if (location.hash === '#/cart') renderCartPage();
+      if (location.hash === '#/checkout') renderCheckout();
+    }
+
+    /* =======================================================================
+       MOBILE MENU
+       ======================================================================= */
+    var mobileBtn = document.getElementById('mobileMenuBtn');
+    var mobileMenu = document.getElementById('mobileMenu');
+    function closeMobileMenu(returnFocus) {
+      if (mobileMenu.classList.contains('hidden')) return;
+      mobileMenu.classList.add('hidden');
+      mobileBtn.setAttribute('aria-expanded', 'false');
+      mobileBtn.setAttribute('aria-label', 'Open menu');
+      if (returnFocus && mobileBtn.focus) mobileBtn.focus();
+    }
+    mobileBtn.addEventListener('click', function () {
+      var open = mobileMenu.classList.toggle('hidden') === false;
+      mobileBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mobileBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (open) {
+        var firstLink = mobileMenu.querySelector('a');
+        if (firstLink && firstLink.focus) firstLink.focus();
+      }
+    });
+    mobileMenu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) closeMobileMenu(false);
+    });
+
+    /* =======================================================================
+       ESCAPE + FOCUS TRAP KEY HANDLING
+       ======================================================================= */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (!modalScrim.hidden) { closeModal(); return; }
+        if (cartOpen) { closeCart(); return; }
+        if (!mobileMenu.classList.contains('hidden')) { closeMobileMenu(true); }
+      }
+      if (e.key === 'Tab') {
+        if (!modalScrim.hidden) trapFocus(modalPanel, e);
+        else if (cartOpen) trapFocus(cartDrawer, e);
+      }
+    });
+
+    /* =======================================================================
+       INIT
+       ======================================================================= */
+    ensureSeed();
+    updateCartBadge();
+    window.addEventListener('hashchange', route);
+    if (!location.hash) location.replace('#/');
+    route();
+
+  })();
+  </script>
+</body>
+</html>

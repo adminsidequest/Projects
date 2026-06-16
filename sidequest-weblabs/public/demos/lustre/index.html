@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Lustre · Fine Jewelry Boutique</title>
+  <meta name="description" content="Lustre is a fine jewelry boutique offering quietly considered pieces in solid gold and ethically sourced stones, made to be worn every day and kept for a lifetime." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            white: '#FFFFFF',
+            bone: '#F5F2EC',
+            ink: '#15130F',
+            champagne: '#C9A86A',
+            taupe: '#9C9486',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            body: ['"Jost"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            wider2: '0.22em',
+          },
+        },
+      },
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Jost', system-ui, sans-serif; color: #15130F; background: #FFFFFF; }
+
+    /* Refined focus ring for keyboard users */
+    *:focus-visible {
+      outline: 2px solid #C9A86A;
+      outline-offset: 3px;
+      border-radius: 1px;
+    }
+
+    .hairline { border-color: rgba(21,19,15,0.12); }
+
+    /* Subtle reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.is-in { opacity: 1; transform: none; }
+
+    /* Product image zoom */
+    .product-media img {
+      transition: transform 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .product-card:hover .product-media img,
+    .product-card:focus-within .product-media img {
+      transform: scale(1.06);
+    }
+
+    /* Animated underline links */
+    .link-underline {
+      position: relative;
+    }
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      height: 1px;
+      width: 100%;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .link-underline:hover::after,
+    .link-underline:focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Cart drawer transitions */
+    #cartDrawer {
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+      transform: translateX(100%);
+    }
+    #cartDrawer.is-open { transform: translateX(0); }
+    #cartOverlay {
+      transition: opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #cartOverlay.is-open { opacity: 1; pointer-events: auto; }
+
+    /* Mobile menu */
+    #mobileMenu {
+      transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+    }
+    #mobileMenu.is-open {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* Cart badge pop */
+    @keyframes badgePop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+    .badge-pop { animation: badgePop 0.4s ease; }
+
+    /* Slow hero pan */
+    @keyframes heroPan {
+      0% { transform: scale(1.04) translate3d(0,0,0); }
+      100% { transform: scale(1.12) translate3d(0,-1.5%,0); }
+    }
+    .hero-pan { animation: heroPan 18s ease-in-out infinite alternate; }
+
+    /* Custom scrollbar inside cart */
+    .thin-scroll::-webkit-scrollbar { width: 6px; }
+    .thin-scroll::-webkit-scrollbar-track { background: transparent; }
+    .thin-scroll::-webkit-scrollbar-thumb { background: rgba(156,148,134,0.5); border-radius: 999px; }
+
+    /* Marquee for announcement (subtle, slow) */
+    .gold-divider {
+      background: linear-gradient(90deg, transparent, #C9A86A, transparent);
+      height: 1px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+      .hero-pan { animation: none; }
+      .badge-pop { animation: none; }
+      *, *::before, *::after { transition-duration: 0.001ms !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-ink antialiased">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[120] focus:left-4 focus:top-4 focus:bg-ink focus:text-white focus:px-4 focus:py-2 focus:text-xs focus:tracking-wider2 focus:uppercase">Skip to content</a>
+
+  <!-- (1) Announcement bar -->
+  <div class="bg-ink text-white text-center text-[11px] sm:text-xs tracking-wider2 uppercase py-2.5 px-4 font-light">
+    Complimentary shipping on orders over 150 · Wrapped by hand in our atelier
+  </div>
+
+  <!-- (2) Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b hairline">
+    <nav aria-label="Primary" class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-3 items-center h-16 sm:h-20">
+
+        <!-- Left: desktop nav / mobile hamburger -->
+        <div class="flex items-center justify-start">
+          <!-- Mobile hamburger -->
+          <button id="menuToggle" type="button"
+            class="md:hidden inline-flex flex-col justify-center gap-[5px] w-9 h-9 -ml-1 group"
+            aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+            <span class="block h-px w-6 bg-ink transition-transform duration-300 group-aria-[expanded=true]:translate-y-[6px] group-aria-[expanded=true]:rotate-45"></span>
+            <span class="block h-px w-6 bg-ink transition-opacity duration-200 group-aria-[expanded=true]:opacity-0"></span>
+            <span class="block h-px w-6 bg-ink transition-transform duration-300 group-aria-[expanded=true]:-translate-y-[6px] group-aria-[expanded=true]:-rotate-45"></span>
+          </button>
+          <!-- Desktop nav -->
+          <ul class="hidden md:flex items-center gap-7 text-[12px] tracking-wider2 uppercase font-light">
+            <li><a href="#collection" class="link-underline hover:text-ink/70 transition-colors">Shop</a></li>
+            <li><a href="#collection" class="link-underline hover:text-ink/70 transition-colors">Collections</a></li>
+            <li><a href="#craft" class="link-underline hover:text-ink/70 transition-colors">The Craft</a></li>
+            <li><a href="#about" class="link-underline hover:text-ink/70 transition-colors">About</a></li>
+          </ul>
+        </div>
+
+        <!-- Center: wordmark -->
+        <div class="flex items-center justify-center">
+          <a href="/" class="font-display text-3xl sm:text-4xl font-light tracking-[0.18em] leading-none text-ink select-none">
+            LUSTRE
+          </a>
+        </div>
+
+        <!-- Right: search + cart -->
+        <div class="flex items-center justify-end gap-4 sm:gap-5">
+          <button id="searchToggle" type="button" class="text-ink hover:text-champagne transition-colors p-1" aria-label="Search" aria-expanded="false" aria-controls="searchPanel">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="m20 20-3.2-3.2" />
+            </svg>
+          </button>
+          <button id="cartButton" type="button" class="relative text-ink hover:text-champagne transition-colors p-1" aria-label="Open shopping bag" aria-haspopup="dialog" aria-controls="cartDrawer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h12l-1 11.5a1.5 1.5 0 0 1-1.5 1.4h-9A1.5 1.5 0 0 1 4 19.5L3 8h3Zm0 0V7a3 3 0 0 1 6 0v1m0 0h6" />
+            </svg>
+            <span id="cartBadge" class="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-champagne text-ink text-[10px] font-medium leading-[18px] text-center hidden" aria-hidden="true">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Inline search field -->
+      <div id="searchPanel" class="hidden border-t hairline">
+        <form class="max-w-7xl mx-auto py-4 flex items-center gap-3" onsubmit="return false;">
+          <label for="searchInput" class="sr-only">Search the boutique</label>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-taupe shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="m20 20-3.2-3.2" /></svg>
+          <input id="searchInput" type="search" placeholder="Search rings, necklaces, earrings" class="flex-1 bg-transparent text-sm tracking-wide placeholder:text-taupe focus:outline-none py-1" />
+          <span class="text-[11px] tracking-wider2 uppercase text-taupe">Press Enter</span>
+        </form>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden absolute left-0 right-0 top-full bg-white border-b hairline shadow-sm">
+        <ul class="px-6 py-6 space-y-5 text-sm tracking-wider2 uppercase font-light">
+          <li><a href="#collection" class="block hover:text-champagne transition-colors" data-mobile-link>Shop</a></li>
+          <li><a href="#collection" class="block hover:text-champagne transition-colors" data-mobile-link>Collections</a></li>
+          <li><a href="#craft" class="block hover:text-champagne transition-colors" data-mobile-link>The Craft</a></li>
+          <li><a href="#about" class="block hover:text-champagne transition-colors" data-mobile-link>About</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- (3) Hero -->
+    <section class="relative h-[78vh] min-h-[520px] max-h-[860px] overflow-hidden bg-bone" aria-labelledby="hero-heading">
+      <div class="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1800&q=80"
+          alt="A model wearing fine gold jewelry, photographed in soft natural light against a warm neutral backdrop"
+          class="w-full h-full object-cover hero-pan"
+          width="1800" height="1200"
+          onerror="this.onerror=null;this.src='https://picsum.photos/seed/lustre-hero/1800/1200'" />
+        <div class="absolute inset-0 bg-gradient-to-r from-ink/45 via-ink/15 to-transparent"></div>
+      </div>
+
+      <div class="relative h-full max-w-7xl mx-auto px-5 sm:px-8 flex items-center">
+        <div class="max-w-xl text-white">
+          <p class="text-[11px] sm:text-xs tracking-wider2 uppercase mb-5 text-white/85">The Solstice Edit · Summer 2026</p>
+          <h1 id="hero-heading" class="font-display font-light text-5xl sm:text-6xl lg:text-7xl leading-[0.98]">
+            Quiet pieces, kept for a lifetime.
+          </h1>
+          <p class="mt-6 text-base sm:text-lg font-light text-white/90 max-w-md leading-relaxed">
+            Solid gold and ethically sourced stones, shaped by hand in our atelier. Designed to be worn every day and never taken off.
+          </p>
+          <a href="#collection" class="inline-flex items-center gap-3 mt-9 bg-white text-ink px-8 py-4 text-[12px] tracking-wider2 uppercase font-medium hover:bg-champagne transition-colors duration-300">
+            Shop the collection
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- (4) Collection / Product grid -->
+    <section id="collection" class="py-20 sm:py-28 bg-white" aria-labelledby="collection-heading">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-20 reveal">
+          <p class="text-[11px] tracking-wider2 uppercase text-champagne mb-4">The Collection</p>
+          <h2 id="collection-heading" class="font-display font-light text-4xl sm:text-5xl leading-tight">
+            Considered, never ornamental
+          </h2>
+          <p class="mt-5 text-taupe font-light leading-relaxed">
+            A small, edited line. Each piece is cast in recycled 14k and 18k gold, finished by a single maker, and stamped with our mark.
+          </p>
+        </div>
+
+        <div id="productGrid" class="grid grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-12 sm:gap-x-8 sm:gap-y-16">
+          <!-- Cards injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- (6) The Craft -->
+    <section id="craft" class="bg-bone" aria-labelledby="craft-heading">
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 items-center">
+        <div class="relative h-72 sm:h-96 lg:h-[640px] overflow-hidden order-1 lg:order-none reveal">
+          <img
+            src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=1200&q=80"
+            alt="A jeweler's hands setting a small stone into a gold band at a workbench scattered with tools"
+            class="w-full h-full object-cover"
+            width="1200" height="900" loading="lazy"
+            onerror="this.onerror=null;this.src='https://picsum.photos/seed/lustre-craft/1200/900'" />
+        </div>
+        <div class="px-5 sm:px-10 lg:px-16 py-16 sm:py-20 reveal">
+          <p class="text-[11px] tracking-wider2 uppercase text-champagne mb-5">The Craft</p>
+          <h2 id="craft-heading" class="font-display font-light text-4xl sm:text-5xl leading-tight">
+            Made slowly, by one pair of hands
+          </h2>
+          <p class="mt-6 text-ink/75 font-light leading-relaxed">
+            Every Lustre piece begins as a lost wax carving and ends at a polishing wheel. We work in recycled gold and pair it with stones traced to responsible mines, so the metal on your hand carries no hidden cost.
+          </p>
+          <p class="mt-4 text-ink/75 font-light leading-relaxed">
+            Nothing here is mass produced. A ring takes roughly nine days to make, and we would not have it any other way.
+          </p>
+          <dl class="mt-10 grid grid-cols-3 gap-4 border-t hairline pt-8">
+            <div>
+              <dt class="text-[11px] tracking-wider2 uppercase text-taupe">Metal</dt>
+              <dd class="font-display text-2xl mt-1">Recycled gold</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] tracking-wider2 uppercase text-taupe">Made in</dt>
+              <dd class="font-display text-2xl mt-1">Our atelier</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] tracking-wider2 uppercase text-taupe">Warranty</dt>
+              <dd class="font-display text-2xl mt-1">Lifetime</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- (7) Editorial lookbook -->
+    <section id="about" class="py-20 sm:py-28 bg-white" aria-labelledby="lookbook-heading">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 reveal">
+          <div>
+            <p class="text-[11px] tracking-wider2 uppercase text-champagne mb-4">Lookbook</p>
+            <h2 id="lookbook-heading" class="font-display font-light text-4xl sm:text-5xl leading-tight">Worn in the light</h2>
+          </div>
+          <p class="text-taupe font-light max-w-sm leading-relaxed">
+            Photographed without retouching, on real skin, in the rooms where these pieces live.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 sm:gap-6">
+          <figure class="sm:col-span-7 reveal">
+            <div class="overflow-hidden bg-bone aspect-[4/3]">
+              <img
+                src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1200&q=80"
+                alt="Close portrait of a wrist stacked with thin gold bangles resting on a linen sleeve"
+                class="w-full h-full object-cover" width="1200" height="900" loading="lazy"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/lustre-look1/1200/900'" />
+            </div>
+            <figcaption class="mt-3 text-[12px] tracking-wider2 uppercase text-taupe">01 · The everyday stack</figcaption>
+          </figure>
+          <figure class="sm:col-span-5 reveal">
+            <div class="overflow-hidden bg-bone aspect-[3/4]">
+              <img
+                src="https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?auto=format&fit=crop&w=900&q=80"
+                alt="A single pendant necklace resting in the hollow of a collarbone in warm afternoon light"
+                class="w-full h-full object-cover" width="900" height="1200" loading="lazy"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/lustre-look2/900/1200'" />
+            </div>
+            <figcaption class="mt-3 text-[12px] tracking-wider2 uppercase text-taupe">02 · The solitaire pendant</figcaption>
+          </figure>
+        </div>
+
+        <figure class="mt-6 reveal">
+          <div class="overflow-hidden bg-bone aspect-[16/7]">
+            <img
+              src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1800&q=80"
+              alt="Several pairs of hands wearing assorted gold rings arranged together on a pale stone surface"
+              class="w-full h-full object-cover" width="1800" height="788" loading="lazy"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/lustre-look3/1800/788'" />
+          </div>
+          <figcaption class="mt-3 text-[12px] tracking-wider2 uppercase text-taupe">03 · A table of friends, all Lustre</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- (8) Newsletter -->
+    <section class="bg-ink text-white py-20 sm:py-28" aria-labelledby="newsletter-heading">
+      <div class="max-w-2xl mx-auto px-5 sm:px-8 text-center">
+        <p class="text-[11px] tracking-wider2 uppercase text-champagne mb-5">Stay close</p>
+        <h2 id="newsletter-heading" class="font-display font-light text-4xl sm:text-5xl leading-tight">
+          First look at new pieces
+        </h2>
+        <p class="mt-5 text-white/70 font-light leading-relaxed">
+          A quiet letter, sent rarely. Early access to limited editions and a note when something we love comes back in stock.
+        </p>
+
+        <form id="newsletterForm" class="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" novalidate>
+          <label for="newsletterEmail" class="sr-only">Email address</label>
+          <input id="newsletterEmail" name="email" type="email" required autocomplete="email"
+            placeholder="you@example.com"
+            class="flex-1 bg-transparent border-b border-white/30 focus:border-champagne text-white placeholder:text-white/40 px-1 py-3 text-sm tracking-wide focus:outline-none transition-colors" />
+          <button type="submit" class="bg-white text-ink px-8 py-3 text-[12px] tracking-wider2 uppercase font-medium hover:bg-champagne transition-colors duration-300 shrink-0">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletterMessage" class="mt-4 text-champagne text-sm tracking-wide h-5" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- (9) Footer -->
+  <footer class="bg-bone text-ink pt-16 pb-10" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">Footer</h2>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-12">
+        <div class="col-span-2 md:col-span-1">
+          <a href="/" class="font-display text-3xl font-light tracking-[0.18em]">LUSTRE</a>
+          <p class="mt-4 text-sm text-taupe font-light leading-relaxed max-w-xs">
+            Fine jewelry made slowly, in recycled gold and traceable stones. Kept simple, on purpose.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-[11px] tracking-wider2 uppercase text-taupe mb-5">Shop</h3>
+          <ul class="space-y-3 text-sm font-light">
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Rings</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Necklaces</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Earrings</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Gift cards</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-[11px] tracking-wider2 uppercase text-taupe mb-5">House</h3>
+          <ul class="space-y-3 text-sm font-light">
+            <li><a href="#craft" class="link-underline hover:text-champagne transition-colors">The Craft</a></li>
+            <li><a href="#about" class="link-underline hover:text-champagne transition-colors">Lookbook</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Sizing guide</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Care &amp; repair</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-[11px] tracking-wider2 uppercase text-taupe mb-5">Care</h3>
+          <ul class="space-y-3 text-sm font-light">
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Shipping</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Returns</a></li>
+            <li><a href="#collection" class="link-underline hover:text-champagne transition-colors">Contact</a></li>
+            <li><a href="#newsletter-heading" class="link-underline hover:text-champagne transition-colors">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gold-divider my-10"></div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] tracking-wider2 uppercase text-taupe">
+        <p>&copy; 2026 Lustre Jewelry · All rights reserved</p>
+        <p>Visa · Mastercard · Amex · Apple Pay · Instagram &middot; Pinterest</p>
+      </div>
+
+      <p class="mt-8 text-center text-[11px] tracking-wider2 uppercase text-taupe">
+        Demo build by <a href="/" class="text-ink hover:text-champagne transition-colors link-underline">Sidequest Weblabs</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Cart overlay + drawer -->
+  <div id="cartOverlay" class="fixed inset-0 z-[90] bg-ink/40 backdrop-blur-[2px]" hidden></div>
+
+  <aside id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle"
+    class="fixed top-0 right-0 z-[100] h-full w-full max-w-md bg-white shadow-2xl flex flex-col" hidden>
+    <div class="flex items-center justify-between px-6 py-5 border-b hairline">
+      <h2 id="cartTitle" class="font-display text-2xl font-light tracking-wide">
+        Your bag <span id="cartTitleCount" class="text-taupe text-lg">(0)</span>
+      </h2>
+      <button id="cartClose" type="button" class="p-1 text-ink hover:text-champagne transition-colors" aria-label="Close bag">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Empty state -->
+    <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center text-center px-8 gap-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-taupe/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 8h12l-1 11.5a1.5 1.5 0 0 1-1.5 1.4h-9A1.5 1.5 0 0 1 4 19.5L3 8h3Zm0 0V7a3 3 0 0 1 6 0v1m0 0h6" />
+      </svg>
+      <p class="font-display text-2xl font-light">Your bag is empty</p>
+      <p class="text-sm text-taupe font-light max-w-[14rem]">Nothing here yet. Add a piece you love and it will appear here.</p>
+      <button type="button" data-close-cart class="mt-2 text-[12px] tracking-wider2 uppercase border-b border-ink pb-1 hover:text-champagne hover:border-champagne transition-colors">
+        Continue shopping
+      </button>
+    </div>
+
+    <!-- Items -->
+    <ul id="cartItems" class="flex-1 overflow-y-auto thin-scroll px-6 divide-y hairline hidden"></ul>
+
+    <!-- Footer / subtotal -->
+    <div id="cartFooter" class="border-t hairline px-6 py-6 hidden">
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-[12px] tracking-wider2 uppercase text-taupe">Subtotal</span>
+        <span id="cartSubtotal" class="font-display text-2xl">$0</span>
+      </div>
+      <p class="text-xs text-taupe font-light mb-5">Shipping and taxes calculated at checkout. Complimentary over 150.</p>
+      <button id="checkoutBtn" type="button" class="w-full bg-ink text-white py-4 text-[12px] tracking-wider2 uppercase font-medium hover:bg-champagne hover:text-ink transition-colors duration-300">
+        Checkout
+      </button>
+      <button type="button" data-close-cart class="w-full mt-3 text-[12px] tracking-wider2 uppercase text-taupe hover:text-ink transition-colors py-2">
+        Continue shopping
+      </button>
+    </div>
+  </aside>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-ink text-white text-[12px] tracking-wider2 uppercase px-6 py-3 shadow-lg opacity-0 translate-y-3 transition-all duration-300 pointer-events-none" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ---------- Product data ----------
+      const products = [
+        { id: 'p1', name: 'Halo Solitaire Ring', price: 1280, img: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p1', alt: 'A slim gold solitaire ring with a single round diamond on a pale background' },
+        { id: 'p2', name: 'Aurelia Hoop Earrings', price: 460, img: 'https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p2', alt: 'A pair of thin polished gold hoop earrings resting on cream linen' },
+        { id: 'p3', name: 'Linea Pendant Necklace', price: 720, img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p3', alt: 'A delicate gold chain necklace with a small bar pendant laid flat' },
+        { id: 'p4', name: 'Demi Signet Ring', price: 540, img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p4', alt: 'A smooth gold signet ring with a softly domed flat face' },
+        { id: 'p5', name: 'Petite Stud Earrings', price: 295, img: 'https://images.unsplash.com/photo-1589674781759-c21c37956a44?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p5', alt: 'Two tiny gold stud earrings with small white stones on a neutral surface' },
+        { id: 'p6', name: 'Mira Tennis Bracelet', price: 1840, img: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p6', alt: 'A fine gold bracelet set with a continuous line of small clear stones' },
+        { id: 'p7', name: 'Vela Curb Chain', price: 980, img: 'https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p7', alt: 'A medium weight gold curb chain necklace coiled on a stone slab' },
+        { id: 'p8', name: 'Orla Pearl Drops', price: 615, img: 'https://images.unsplash.com/photo-1591209627710-1d5e94e62d77?auto=format&fit=crop&w=900&q=80', seed: 'lustre-p8', alt: 'A pair of gold drop earrings each ending in a single round pearl' },
+      ];
+
+      const formatPrice = (n) => '$' + n.toLocaleString('en-US');
+
+      // ---------- Cart state ----------
+      const cart = new Map(); // id -> { product, qty }
+
+      // ---------- Element refs ----------
+      const grid = document.getElementById('productGrid');
+      const cartButton = document.getElementById('cartButton');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartOverlay = document.getElementById('cartOverlay');
+      const cartClose = document.getElementById('cartClose');
+      const cartItemsEl = document.getElementById('cartItems');
+      const cartEmptyEl = document.getElementById('cartEmpty');
+      const cartFooterEl = document.getElementById('cartFooter');
+      const cartSubtotalEl = document.getElementById('cartSubtotal');
+      const cartBadge = document.getElementById('cartBadge');
+      const cartTitleCount = document.getElementById('cartTitleCount');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      const toast = document.getElementById('toast');
+
+      let lastFocused = null;
+      let toastTimer = null;
+
+      // ---------- Render product grid ----------
+      function renderGrid() {
+        const frag = document.createDocumentFragment();
+        products.forEach(function (p) {
+          const card = document.createElement('article');
+          card.className = 'product-card group reveal';
+          card.innerHTML = [
+            '<div class="product-media relative overflow-hidden bg-bone aspect-square">',
+              '<img src="', p.img, '" alt="', p.alt, '" loading="lazy" width="900" height="900" class="w-full h-full object-cover" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/', p.seed, '/900/900\'" />',
+            '</div>',
+            '<div class="mt-4 flex items-start justify-between gap-3">',
+              '<div>',
+                '<h3 class="font-display text-xl sm:text-2xl font-light leading-snug">', p.name, '</h3>',
+                '<p class="text-sm text-taupe mt-1">', formatPrice(p.price), '</p>',
+              '</div>',
+            '</div>',
+            '<button type="button" data-add="', p.id, '" class="mt-4 w-full border border-ink/80 text-[11px] sm:text-[12px] tracking-wider2 uppercase py-3 hover:bg-ink hover:text-white transition-colors duration-300">Add to bag</button>'
+          ].join('');
+          frag.appendChild(card);
+        });
+        grid.appendChild(frag);
+      }
+
+      // ---------- Cart operations ----------
+      function addToCart(id) {
+        const product = products.find(function (p) { return p.id === id; });
+        if (!product) return;
+        if (cart.has(id)) {
+          cart.get(id).qty += 1;
+        } else {
+          cart.set(id, { product: product, qty: 1 });
+        }
+        renderCart();
+        pulseBadge();
+        showToast(product.name + ' added to bag');
+      }
+
+      function removeFromCart(id) {
+        cart.delete(id);
+        renderCart();
+      }
+
+      function setQty(id, qty) {
+        if (!cart.has(id)) return;
+        if (qty <= 0) {
+          removeFromCart(id);
+          return;
+        }
+        cart.get(id).qty = qty;
+        renderCart();
+      }
+
+      function totalCount() {
+        let n = 0;
+        cart.forEach(function (line) { n += line.qty; });
+        return n;
+      }
+
+      function subtotal() {
+        let s = 0;
+        cart.forEach(function (line) { s += line.product.price * line.qty; });
+        return s;
+      }
+
+      // ---------- Render cart ----------
+      function renderCart() {
+        const count = totalCount();
+
+        // Header badge
+        if (count > 0) {
+          cartBadge.textContent = count;
+          cartBadge.classList.remove('hidden');
+        } else {
+          cartBadge.classList.add('hidden');
+        }
+        cartTitleCount.textContent = '(' + count + ')';
+
+        // Empty vs filled
+        if (cart.size === 0) {
+          cartEmptyEl.classList.remove('hidden');
+          cartItemsEl.classList.add('hidden');
+          cartFooterEl.classList.add('hidden');
+          cartItemsEl.innerHTML = '';
+          cartSubtotalEl.textContent = formatPrice(0);
+          return;
+        }
+
+        cartEmptyEl.classList.add('hidden');
+        cartItemsEl.classList.remove('hidden');
+        cartFooterEl.classList.remove('hidden');
+
+        cartItemsEl.innerHTML = '';
+        cart.forEach(function (line) {
+          const p = line.product;
+          const li = document.createElement('li');
+          li.className = 'flex gap-4 py-5';
+          li.innerHTML = [
+            '<div class="w-20 h-20 shrink-0 overflow-hidden bg-bone">',
+              '<img src="', p.img, '" alt="', p.alt, '" loading="lazy" width="160" height="160" class="w-full h-full object-cover" onerror="this.onerror=null;this.src=\'https://picsum.photos/seed/', p.seed, '/160/160\'" />',
+            '</div>',
+            '<div class="flex-1 min-w-0">',
+              '<div class="flex items-start justify-between gap-2">',
+                '<h3 class="font-display text-lg font-light leading-tight">', p.name, '</h3>',
+                '<button type="button" data-remove="', p.id, '" class="text-taupe hover:text-ink transition-colors p-0.5 shrink-0" aria-label="Remove ', p.name, ' from bag">',
+                  '<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>',
+                '</button>',
+              '</div>',
+              '<p class="text-sm text-taupe mt-1">', formatPrice(p.price), '</p>',
+              '<div class="mt-3 flex items-center justify-between">',
+                '<div class="inline-flex items-center border hairline">',
+                  '<button type="button" data-dec="', p.id, '" class="w-8 h-8 flex items-center justify-center text-ink hover:bg-bone transition-colors" aria-label="Decrease quantity of ', p.name, '">&minus;</button>',
+                  '<span class="w-8 text-center text-sm" aria-label="Quantity">', line.qty, '</span>',
+                  '<button type="button" data-inc="', p.id, '" class="w-8 h-8 flex items-center justify-center text-ink hover:bg-bone transition-colors" aria-label="Increase quantity of ', p.name, '">+</button>',
+                '</div>',
+                '<span class="font-display text-lg">', formatPrice(p.price * line.qty), '</span>',
+              '</div>',
+            '</div>'
+          ].join('');
+          cartItemsEl.appendChild(li);
+        });
+
+        cartSubtotalEl.textContent = formatPrice(subtotal());
+      }
+
+      function pulseBadge() {
+        cartBadge.classList.remove('badge-pop');
+        // force reflow to restart animation
+        void cartBadge.offsetWidth;
+        cartBadge.classList.add('badge-pop');
+      }
+
+      // ---------- Toast ----------
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.remove('opacity-0', 'translate-y-3');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.add('opacity-0', 'translate-y-3');
+          toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2200);
+      }
+
+      // ---------- Cart drawer open/close ----------
+      function openCart() {
+        lastFocused = document.activeElement;
+        cartOverlay.hidden = false;
+        cartDrawer.hidden = false;
+        // allow display before transition
+        requestAnimationFrame(function () {
+          cartOverlay.classList.add('is-open');
+          cartDrawer.classList.add('is-open');
+        });
+        document.body.style.overflow = 'hidden';
+        cartButton.setAttribute('aria-expanded', 'true');
+        cartClose.focus();
+      }
+
+      function closeCart() {
+        cartOverlay.classList.remove('is-open');
+        cartDrawer.classList.remove('is-open');
+        cartButton.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        setTimeout(function () {
+          cartOverlay.hidden = true;
+          cartDrawer.hidden = true;
+        }, 500);
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus();
+        }
+      }
+
+      // ---------- Event wiring ----------
+      grid.addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-add]');
+        if (!btn) return;
+        addToCart(btn.getAttribute('data-add'));
+      });
+
+      cartItemsEl.addEventListener('click', function (e) {
+        const inc = e.target.closest('[data-inc]');
+        const dec = e.target.closest('[data-dec]');
+        const rem = e.target.closest('[data-remove]');
+        if (inc) { const id = inc.getAttribute('data-inc'); setQty(id, cart.get(id).qty + 1); }
+        else if (dec) { const id = dec.getAttribute('data-dec'); setQty(id, cart.get(id).qty - 1); }
+        else if (rem) { removeFromCart(rem.getAttribute('data-remove')); }
+      });
+
+      cartButton.addEventListener('click', openCart);
+      cartClose.addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+      document.querySelectorAll('[data-close-cart]').forEach(function (b) {
+        b.addEventListener('click', closeCart);
+      });
+
+      checkoutBtn.addEventListener('click', function () {
+        showToast('This is a demo · checkout is not connected');
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          if (!cartDrawer.hidden) closeCart();
+          if (mobileMenu.classList.contains('is-open')) closeMobileMenu();
+          if (!searchPanel.classList.contains('hidden')) toggleSearch(false);
+        }
+      });
+
+      // ---------- Mobile menu ----------
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      function openMobileMenu() {
+        mobileMenu.classList.add('is-open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', 'Close menu');
+      }
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+      }
+      menuToggle.addEventListener('click', function () {
+        if (mobileMenu.classList.contains('is-open')) closeMobileMenu();
+        else openMobileMenu();
+      });
+      document.querySelectorAll('[data-mobile-link]').forEach(function (link) {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
+      // ---------- Search panel ----------
+      const searchToggle = document.getElementById('searchToggle');
+      const searchPanel = document.getElementById('searchPanel');
+      const searchInput = document.getElementById('searchInput');
+      function toggleSearch(force) {
+        const willOpen = force === undefined ? searchPanel.classList.contains('hidden') : force;
+        if (willOpen) {
+          searchPanel.classList.remove('hidden');
+          searchToggle.setAttribute('aria-expanded', 'true');
+          searchInput.focus();
+        } else {
+          searchPanel.classList.add('hidden');
+          searchToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+      searchToggle.setAttribute('aria-expanded', 'false');
+      searchToggle.setAttribute('aria-controls', 'searchPanel');
+      searchToggle.addEventListener('click', function () { toggleSearch(); });
+
+      // ---------- Newsletter ----------
+      const newsletterForm = document.getElementById('newsletterForm');
+      const newsletterEmail = document.getElementById('newsletterEmail');
+      const newsletterMessage = document.getElementById('newsletterMessage');
+      newsletterForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const val = newsletterEmail.value.trim();
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+        if (!valid) {
+          newsletterMessage.textContent = 'Please enter a valid email address.';
+          newsletterMessage.classList.remove('text-champagne');
+          newsletterMessage.classList.add('text-white');
+          newsletterEmail.focus();
+          return;
+        }
+        newsletterMessage.classList.add('text-champagne');
+        newsletterMessage.classList.remove('text-white');
+        newsletterMessage.textContent = 'Thank you. Look for our next letter soon.';
+        newsletterForm.reset();
+      });
+
+      // ---------- Reveal on scroll ----------
+      function initReveal() {
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          els.forEach(function (el) { el.classList.add('is-in'); });
+          return;
+        }
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      }
+
+      // ---------- Init ----------
+      renderGrid();
+      renderCart();
+      initReveal();
+    })();
+  </script>
+</body>
+</html>

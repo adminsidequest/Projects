@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Saveur · Modern French Neighborhood Bistro</title>
+  <meta name="description" content="Saveur is a modern French inspired neighborhood bistro. Seasonal, locally sourced cooking, a thoughtful wine list, and a warm room. Reserve a table." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FBF7F0',
+            ink: '#1C1A17',
+            burgundy: '#6E1E2A',
+            brass: '#B98A3E',
+            stone: '#7A7367',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body: ['"Jost"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            eyebrow: '0.28em',
+          },
+          boxShadow: {
+            soft: '0 24px 60px -28px rgba(28,26,23,0.35)',
+            card: '0 18px 40px -24px rgba(28,26,23,0.45)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    body { background-color: #FBF7F0; }
+
+    /* Brass hairline rule */
+    .hairline {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(185,138,62,0.65), transparent);
+    }
+
+    /* Hero overlay gradient */
+    .hero-veil {
+      background: linear-gradient(180deg, rgba(28,26,23,0.55) 0%, rgba(28,26,23,0.25) 40%, rgba(28,26,23,0.72) 100%);
+    }
+
+    /* Section reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Menu fade swap */
+    .menu-fade { animation: menuFade 0.45s ease both; }
+    @keyframes menuFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Slow hero zoom */
+    .hero-zoom { animation: heroZoom 18s ease-out forwards; }
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+
+    /* Decorative map panel */
+    .map-grid {
+      background-color: #F4ECDD;
+      background-image:
+        linear-gradient(rgba(185,138,62,0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(185,138,62,0.16) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .map-road {
+      background: linear-gradient(90deg, transparent, rgba(110,30,42,0.18), transparent);
+    }
+
+    /* Custom scrollbar */
+    *::-webkit-scrollbar { width: 11px; height: 11px; }
+    *::-webkit-scrollbar-track { background: #F2E9DA; }
+    *::-webkit-scrollbar-thumb {
+      background: #B98A3E;
+      border-radius: 999px;
+      border: 3px solid #F2E9DA;
+    }
+    *::-webkit-scrollbar-thumb:hover { background: #6E1E2A; }
+
+    /* Focus visibility */
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid #6E1E2A;
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    .eyebrow {
+      font-family: 'Jost', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    .underline-grow {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 0.35s ease;
+    }
+    .underline-grow:hover, .underline-grow:focus-visible { background-size: 100% 1px; }
+  </style>
+</head>
+
+<body class="font-body text-ink antialiased selection:bg-burgundy selection:text-cream">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-4 focus:left-4 focus:bg-burgundy focus:text-cream focus:px-5 focus:py-3 focus:rounded-full focus:font-medium">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header id="siteHeader" class="fixed top-0 inset-x-0 z-50 transition-colors duration-500">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <nav aria-label="Primary" class="flex items-center justify-between h-20">
+        <a href="#hero" class="font-display text-2xl sm:text-3xl tracking-wide" id="brandLink">
+          <span class="text-cream transition-colors duration-500" data-brand>Saveur</span>
+        </a>
+
+        <ul class="hidden lg:flex items-center gap-9 text-sm font-medium">
+          <li><a href="#menu" class="nav-link underline-grow transition-colors text-cream" data-navlink>Menu</a></li>
+          <li><a href="#story" class="nav-link underline-grow transition-colors text-cream" data-navlink>Story</a></li>
+          <li><a href="#gallery" class="nav-link underline-grow transition-colors text-cream" data-navlink>Gallery</a></li>
+          <li><a href="#visit" class="nav-link underline-grow transition-colors text-cream" data-navlink>Visit</a></li>
+        </ul>
+
+        <div class="flex items-center gap-3">
+          <a href="#reserve" class="hidden sm:inline-flex items-center justify-center rounded-full bg-burgundy px-6 py-3 text-sm font-medium text-cream shadow-soft transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#5a1822]">
+            Reserve a table
+          </a>
+
+          <button id="navToggle" type="button" aria-expanded="false" aria-controls="mobileMenu"
+                  class="lg:hidden inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/40 text-cream transition-colors"
+                  data-toggle>
+            <span class="sr-only">Open menu</span>
+            <svg id="iconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+            </svg>
+            <svg id="iconClose" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-cream border-t border-brass/30 shadow-card">
+      <ul class="mx-auto max-w-7xl px-5 py-4 flex flex-col text-ink">
+        <li><a href="#menu" class="block py-3 text-lg border-b border-brass/15" data-mobile-link>Menu</a></li>
+        <li><a href="#story" class="block py-3 text-lg border-b border-brass/15" data-mobile-link>Story</a></li>
+        <li><a href="#gallery" class="block py-3 text-lg border-b border-brass/15" data-mobile-link>Gallery</a></li>
+        <li><a href="#visit" class="block py-3 text-lg border-b border-brass/15" data-mobile-link>Visit</a></li>
+        <li class="pt-4">
+          <a href="#reserve" class="block text-center rounded-full bg-burgundy px-6 py-3 text-cream font-medium" data-mobile-link>Reserve a table</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="relative min-h-[100svh] flex items-end overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1535473895227-bdecb20fb157?auto=format&fit=crop&w=1600&q=80"
+        onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-hero/1600/1000'"
+        alt="A plated French dish of seared duck breast with seasonal vegetables on a dark ceramic plate"
+        class="absolute inset-0 h-full w-full object-cover hero-zoom"
+        width="1600" height="1000" fetchpriority="high" />
+      <div class="absolute inset-0 hero-veil"></div>
+
+      <div class="relative z-10 mx-auto max-w-7xl w-full px-5 sm:px-8 pb-20 sm:pb-28">
+        <p class="eyebrow text-brass mb-5" data-reveal>Neighborhood bistro · Seasonal kitchen</p>
+        <h1 class="font-display text-cream text-6xl sm:text-7xl md:text-8xl leading-[0.95] max-w-3xl" data-reveal>Saveur</h1>
+        <p class="mt-6 max-w-xl text-cream/90 text-lg sm:text-xl font-light" data-reveal>
+          Honest French cooking, set by the season and the morning market. A small room, a long table, and a glass worth lingering over.
+        </p>
+        <div class="mt-9 flex flex-col sm:flex-row gap-4" data-reveal>
+          <a href="#reserve" class="inline-flex items-center justify-center rounded-full bg-burgundy px-8 py-4 text-sm font-medium text-cream shadow-soft transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#5a1822]">
+            Reserve a table
+          </a>
+          <a href="#menu" class="inline-flex items-center justify-center rounded-full border border-cream/55 px-8 py-4 text-sm font-medium text-cream transition-colors hover:bg-cream hover:text-ink">
+            View the menu
+          </a>
+        </div>
+      </div>
+
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-cream/70" aria-hidden="true">
+        <span class="eyebrow text-[0.6rem]">Scroll</span>
+        <span class="h-10 w-px bg-cream/40"></span>
+      </div>
+    </section>
+
+    <!-- ============ STORY STRIP ============ -->
+    <section id="story" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div class="reveal">
+            <div class="overflow-hidden rounded-2xl shadow-card">
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80"
+                onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-kitchen/1200/900'"
+                alt="A chef plating a dish at a warmly lit bistro pass during evening service"
+                class="w-full aspect-[4/3] object-cover transition-transform duration-700 hover:scale-105"
+                loading="lazy" width="1200" height="900" />
+            </div>
+          </div>
+
+          <div class="reveal">
+            <p class="eyebrow text-brass mb-4">From the kitchen</p>
+            <h2 class="font-display text-4xl sm:text-5xl leading-tight">
+              Cooked close to home, plated without fuss
+            </h2>
+            <div class="hairline my-7 max-w-[120px]"></div>
+            <p class="text-stone text-lg leading-relaxed">
+              Every morning begins at the market. We build the menu around what the growers, fishers, and cheesemakers bring us that week, then let a few good ingredients do the talking. Slow stocks, fresh pasta rolled by hand, and a wood fire that runs from open to close.
+            </p>
+            <p class="mt-5 text-stone text-lg leading-relaxed">
+              The result is French at heart and neighborly in spirit. Refined, but the kind of room where you loosen your collar and stay for one more course.
+            </p>
+            <a href="#menu" class="mt-8 inline-flex items-center gap-2 text-burgundy font-medium underline-grow">
+              See what we are cooking
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SIGNATURE MENU (FEATURE A) ============ -->
+    <section id="menu" class="py-20 sm:py-28 bg-[#F4ECDD]/60">
+      <div class="mx-auto max-w-5xl px-5 sm:px-8">
+        <div class="text-center reveal">
+          <p class="eyebrow text-brass mb-4">The carte</p>
+          <h2 class="font-display text-4xl sm:text-5xl md:text-6xl leading-tight">The signature menu</h2>
+          <p class="mt-5 text-stone text-lg max-w-2xl mx-auto">
+            A seasonal selection, refreshed as the market turns. Prices are per plate. Kindly let us know of any allergies.
+          </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mt-12 flex justify-center reveal">
+          <div role="tablist" aria-label="Menu categories"
+               class="inline-flex flex-wrap justify-center gap-1 rounded-full bg-cream p-1.5 shadow-card border border-brass/20">
+            <button role="tab" id="tab-starters" aria-controls="panel-menu" aria-selected="true" data-tab="starters"
+                    class="menu-tab rounded-full px-5 sm:px-7 py-2.5 text-sm font-medium transition-colors">
+              Starters
+            </button>
+            <button role="tab" id="tab-mains" aria-controls="panel-menu" aria-selected="false" data-tab="mains" tabindex="-1"
+                    class="menu-tab rounded-full px-5 sm:px-7 py-2.5 text-sm font-medium transition-colors">
+              Mains
+            </button>
+            <button role="tab" id="tab-desserts" aria-controls="panel-menu" aria-selected="false" data-tab="desserts" tabindex="-1"
+                    class="menu-tab rounded-full px-5 sm:px-7 py-2.5 text-sm font-medium transition-colors">
+              Desserts
+            </button>
+            <button role="tab" id="tab-wine" aria-controls="panel-menu" aria-selected="false" data-tab="wine" tabindex="-1"
+                    class="menu-tab rounded-full px-5 sm:px-7 py-2.5 text-sm font-medium transition-colors">
+              Wine
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel -->
+        <div id="panel-menu" role="tabpanel" aria-labelledby="tab-starters"
+             class="mt-12 bg-cream rounded-2xl shadow-card border border-brass/15 p-6 sm:p-10">
+          <h3 id="menuCategoryTitle" class="font-display text-2xl sm:text-3xl text-burgundy mb-2">Starters</h3>
+          <p id="menuCategoryNote" class="text-stone text-sm mb-7">To begin. Bright, small, made to share.</p>
+          <ul id="menuList" class="divide-y divide-brass/15"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CHEF / ABOUT ============ -->
+    <section id="chef" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div class="lg:col-span-5 reveal order-2 lg:order-1">
+            <div class="relative">
+              <div class="overflow-hidden rounded-2xl shadow-card">
+                <img
+                  src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1000&q=80"
+                  onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-chef/1000/1200'"
+                  alt="Portrait of Saveur head chef Camille Marchand in chef whites in the kitchen"
+                  class="w-full aspect-[4/5] object-cover"
+                  loading="lazy" width="1000" height="1200" />
+              </div>
+              <div class="absolute -bottom-5 -right-3 sm:-right-6 bg-burgundy text-cream rounded-xl px-6 py-4 shadow-soft">
+                <p class="font-display text-xl leading-none">Camille Marchand</p>
+                <p class="eyebrow text-brass mt-2 text-[0.6rem]">Head chef · Founder</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 reveal order-1 lg:order-2">
+            <p class="eyebrow text-brass mb-4">The chef</p>
+            <h2 class="font-display text-4xl sm:text-5xl leading-tight">Twenty years of fire, butter, and patience</h2>
+            <div class="hairline my-7 max-w-[120px]"></div>
+            <p class="text-stone text-lg leading-relaxed">
+              Camille trained across Lyon and the Basque coast before bringing that grounding home. Her cooking favors restraint over spectacle, a clean stock over a clever garnish, and the quiet confidence of an ingredient at its peak.
+            </p>
+            <blockquote class="mt-8 border-l-2 border-brass pl-6">
+              <p class="font-display italic text-2xl sm:text-3xl text-ink leading-snug">
+                "Good cooking is mostly listening. The market tells you what to make. You just try not to get in its way."
+              </p>
+              <footer class="mt-4 text-stone text-sm">Camille Marchand, on the philosophy at Saveur</footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section id="gallery" class="py-20 sm:py-28 bg-[#F4ECDD]/60">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="text-center reveal mb-12">
+          <p class="eyebrow text-brass mb-4">In the room</p>
+          <h2 class="font-display text-4xl sm:text-5xl md:text-6xl leading-tight">A look around the table</h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <figure class="reveal col-span-2 lg:col-span-2 lg:row-span-2 overflow-hidden rounded-2xl shadow-card group">
+            <img
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-gal1/1200/1200'"
+              alt="The warm candlelit dining room of Saveur with bistro tables set for the evening"
+              class="w-full h-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy" width="1200" height="1200" />
+          </figure>
+          <figure class="reveal overflow-hidden rounded-2xl shadow-card group">
+            <img
+              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-gal2/900/900'"
+              alt="A glass of red wine poured at a bistro table beside a flickering candle"
+              class="w-full h-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy" width="900" height="900" />
+          </figure>
+          <figure class="reveal overflow-hidden rounded-2xl shadow-card group">
+            <img
+              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-gal3/900/900'"
+              alt="A fresh seasonal salad plated with herbs and edible flowers"
+              class="w-full h-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy" width="900" height="900" />
+          </figure>
+          <figure class="reveal col-span-2 overflow-hidden rounded-2xl shadow-card group">
+            <img
+              src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80"
+              onerror="this.onerror=null;this.src='https://picsum.photos/seed/saveur-gal4/1200/700'"
+              alt="A dessert of caramelized tart with a dusting of sugar on a marble counter"
+              class="w-full h-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-105"
+              loading="lazy" width="1200" height="700" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESERVATION (FEATURE B) ============ -->
+    <section id="reserve" class="py-20 sm:py-28">
+      <div class="mx-auto max-w-5xl px-5 sm:px-8">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div class="lg:col-span-5 reveal">
+            <p class="eyebrow text-brass mb-4">Reservations</p>
+            <h2 class="font-display text-4xl sm:text-5xl leading-tight">Hold a seat at the table</h2>
+            <div class="hairline my-7 max-w-[120px]"></div>
+            <p class="text-stone text-lg leading-relaxed">
+              We seat in two services each evening. Tables of five or more are best handled by a quick call, and we will always try to find room for the spontaneous.
+            </p>
+            <ul class="mt-7 space-y-3 text-ink">
+              <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-brass" aria-hidden="true"></span> Dinner, Tuesday through Sunday</li>
+              <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-brass" aria-hidden="true"></span> Walk ins welcome at the bar</li>
+              <li class="flex items-center gap-3"><span class="h-1.5 w-1.5 rounded-full bg-brass" aria-hidden="true"></span> Private room seats up to fourteen</li>
+            </ul>
+          </div>
+
+          <div class="lg:col-span-7 reveal">
+            <div class="bg-cream rounded-2xl shadow-card border border-brass/20 p-6 sm:p-9">
+              <!-- FORM -->
+              <form id="reserveForm" novalidate class="space-y-5">
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label for="resDate" class="block text-sm font-medium mb-1.5">Date <span class="text-burgundy" aria-hidden="true">*</span></label>
+                    <input type="date" id="resDate" name="date" required
+                           class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink focus:border-burgundy focus:outline-none" />
+                    <p class="field-error hidden text-burgundy text-xs mt-1.5" data-error-for="resDate">Please choose a date.</p>
+                  </div>
+                  <div>
+                    <label for="resTime" class="block text-sm font-medium mb-1.5">Time <span class="text-burgundy" aria-hidden="true">*</span></label>
+                    <select id="resTime" name="time" required
+                            class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink focus:border-burgundy focus:outline-none">
+                      <option value="" selected disabled>Select a time</option>
+                      <option value="5:30 PM">5:30 PM</option>
+                      <option value="6:00 PM">6:00 PM</option>
+                      <option value="6:30 PM">6:30 PM</option>
+                      <option value="7:00 PM">7:00 PM</option>
+                      <option value="7:30 PM">7:30 PM</option>
+                      <option value="8:00 PM">8:00 PM</option>
+                      <option value="8:30 PM">8:30 PM</option>
+                      <option value="9:00 PM">9:00 PM</option>
+                    </select>
+                    <p class="field-error hidden text-burgundy text-xs mt-1.5" data-error-for="resTime">Please pick a time.</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="resParty" class="block text-sm font-medium mb-1.5">Party size <span class="text-burgundy" aria-hidden="true">*</span></label>
+                  <select id="resParty" name="party" required
+                          class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink focus:border-burgundy focus:outline-none">
+                    <option value="" selected disabled>How many guests?</option>
+                    <option value="1">1 guest</option>
+                    <option value="2">2 guests</option>
+                    <option value="3">3 guests</option>
+                    <option value="4">4 guests</option>
+                    <option value="5">5 guests</option>
+                    <option value="6">6 guests</option>
+                    <option value="7">7 guests</option>
+                    <option value="8">8 guests</option>
+                  </select>
+                  <p class="field-error hidden text-burgundy text-xs mt-1.5" data-error-for="resParty">Please tell us how many.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label for="resName" class="block text-sm font-medium mb-1.5">Name <span class="text-burgundy" aria-hidden="true">*</span></label>
+                    <input type="text" id="resName" name="name" required autocomplete="name" placeholder="Your name"
+                           class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink placeholder:text-stone/55 focus:border-burgundy focus:outline-none" />
+                    <p class="field-error hidden text-burgundy text-xs mt-1.5" data-error-for="resName">Please enter your name.</p>
+                  </div>
+                  <div>
+                    <label for="resEmail" class="block text-sm font-medium mb-1.5">Email <span class="text-burgundy" aria-hidden="true">*</span></label>
+                    <input type="email" id="resEmail" name="email" required autocomplete="email" placeholder="you@example.com"
+                           class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink placeholder:text-stone/55 focus:border-burgundy focus:outline-none" />
+                    <p class="field-error hidden text-burgundy text-xs mt-1.5" data-error-for="resEmail">Please enter a valid email.</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="resNotes" class="block text-sm font-medium mb-1.5">Special requests</label>
+                  <textarea id="resNotes" name="notes" rows="3" placeholder="Allergies, a celebration, a quiet corner."
+                            class="w-full rounded-lg border border-stone/30 bg-cream px-4 py-3 text-ink placeholder:text-stone/55 focus:border-burgundy focus:outline-none resize-y"></textarea>
+                </div>
+
+                <button type="submit"
+                        class="w-full inline-flex items-center justify-center rounded-full bg-burgundy px-8 py-4 text-sm font-medium text-cream shadow-soft transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#5a1822]">
+                  Request reservation
+                </button>
+                <p class="text-xs text-stone text-center">This is a demo. No booking is actually made.</p>
+              </form>
+
+              <!-- SUCCESS (hidden until submit) -->
+              <div id="reserveSuccess" class="hidden text-center py-4" role="status" aria-live="polite">
+                <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-brass/15 ring-1 ring-brass/40">
+                  <svg class="h-8 w-8 text-burgundy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <h3 class="font-display text-3xl text-burgundy">A table is held</h3>
+                <p class="mt-3 text-stone">Thank you, <span id="confName" class="text-ink font-medium"></span>. We look forward to having you.</p>
+
+                <div class="mt-7 rounded-xl bg-[#F4ECDD] border border-brass/25 px-6 py-5 text-left">
+                  <p class="eyebrow text-brass mb-3 text-[0.62rem]">Your reservation</p>
+                  <dl class="grid grid-cols-3 gap-y-3 text-sm">
+                    <dt class="text-stone col-span-1">Date</dt><dd id="confDate" class="text-ink font-medium col-span-2 text-right"></dd>
+                    <dt class="text-stone col-span-1">Time</dt><dd id="confTime" class="text-ink font-medium col-span-2 text-right"></dd>
+                    <dt class="text-stone col-span-1">Party</dt><dd id="confParty" class="text-ink font-medium col-span-2 text-right"></dd>
+                  </dl>
+                </div>
+
+                <p class="mt-5 text-xs text-stone">A confirmation would normally arrive at <span id="confEmail" class="text-ink"></span>.</p>
+                <button type="button" id="reserveReset" class="mt-6 inline-flex items-center gap-2 text-burgundy font-medium underline-grow">
+                  Make another reservation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOURS & LOCATION ============ -->
+    <section id="visit" class="py-20 sm:py-28 bg-ink text-cream">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div class="reveal">
+            <p class="eyebrow text-brass mb-4">Visit</p>
+            <h2 class="font-display text-4xl sm:text-5xl leading-tight text-cream">Hours and the address</h2>
+            <div class="hairline my-7 max-w-[120px]"></div>
+
+            <dl class="divide-y divide-cream/15">
+              <div class="flex justify-between py-3"><dt class="text-cream/80">Monday</dt><dd class="text-cream/55">Closed</dd></div>
+              <div class="flex justify-between py-3"><dt class="text-cream/80">Tuesday to Thursday</dt><dd>5:30 PM · 10:00 PM</dd></div>
+              <div class="flex justify-between py-3"><dt class="text-cream/80">Friday and Saturday</dt><dd>5:30 PM · 11:00 PM</dd></div>
+              <div class="flex justify-between py-3"><dt class="text-cream/80">Sunday</dt><dd>5:00 PM · 9:30 PM</dd></div>
+            </dl>
+
+            <div class="mt-8 space-y-1.5">
+              <p class="font-display text-2xl text-cream">14 Rue Lanterne</p>
+              <p class="text-cream/70">Old Quarter, Harbor District</p>
+              <p class="text-cream/70">Reservations · hello@saveur-bistro.demo</p>
+            </div>
+          </div>
+
+          <!-- Decorative map panel -->
+          <div class="reveal">
+            <div class="relative map-grid rounded-2xl overflow-hidden shadow-soft aspect-[4/3] border border-brass/30">
+              <div class="absolute top-1/3 inset-x-0 h-6 map-road"></div>
+              <div class="absolute left-1/2 inset-y-0 w-6 map-road rotate-6"></div>
+              <div class="absolute top-2/3 left-0 right-1/4 h-4 map-road -rotate-3"></div>
+
+              <!-- Pin -->
+              <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full flex flex-col items-center">
+                <div class="bg-burgundy text-cream rounded-full px-4 py-2 shadow-soft text-sm font-medium whitespace-nowrap">Saveur</div>
+                <svg class="h-9 w-9 -mt-1 text-burgundy" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+                </svg>
+              </div>
+
+              <span class="sr-only">Decorative map illustration showing the location of Saveur in the Old Quarter.</span>
+              <div class="absolute bottom-3 right-4 eyebrow text-[0.55rem] text-burgundy/70">Old Quarter</div>
+            </div>
+            <a href="#reserve" class="mt-5 inline-flex items-center gap-2 text-brass font-medium underline-grow">
+              Reserve a table
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-cream border-t border-brass/25">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-14">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div class="lg:col-span-2">
+          <p class="font-display text-3xl text-ink">Saveur</p>
+          <p class="mt-3 text-stone max-w-sm">A modern French neighborhood bistro. Seasonal cooking, a thoughtful list, and a room made for lingering.</p>
+        </div>
+
+        <nav aria-label="Footer">
+          <p class="eyebrow text-brass mb-4">Explore</p>
+          <ul class="space-y-2.5 text-ink">
+            <li><a href="#menu" class="underline-grow">Menu</a></li>
+            <li><a href="#story" class="underline-grow">Story</a></li>
+            <li><a href="#gallery" class="underline-grow">Gallery</a></li>
+            <li><a href="#reserve" class="underline-grow">Reserve</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <p class="eyebrow text-brass mb-4">Follow</p>
+          <ul class="space-y-2.5 text-ink">
+            <li><a href="#" class="underline-grow">Instagram</a></li>
+            <li><a href="#" class="underline-grow">Facebook</a></li>
+            <li><a href="#" class="underline-grow">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hairline my-10"></div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-stone">
+        <p>&copy; <span id="year"></span> Saveur Bistro. All rights reserved.</p>
+        <p>Demo build by <a href="/" class="text-burgundy font-medium underline-grow">Sidequest Weblabs</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ SCRIPT ============ -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---------- Year ---------- */
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      /* ---------- Header scroll state ---------- */
+      const header = document.getElementById('siteHeader');
+      const brand = document.querySelector('[data-brand]');
+      const navLinks = document.querySelectorAll('[data-navlink]');
+      const toggleBtn = document.getElementById('navToggle');
+
+      function setHeaderSolid(solid) {
+        if (solid) {
+          header.classList.add('bg-cream', 'shadow-card');
+          brand.classList.remove('text-cream');
+          brand.classList.add('text-burgundy');
+          navLinks.forEach(function (l) { l.classList.remove('text-cream'); l.classList.add('text-ink'); });
+          toggleBtn.classList.remove('text-cream', 'border-cream/40');
+          toggleBtn.classList.add('text-ink', 'border-ink/25');
+        } else {
+          header.classList.remove('bg-cream', 'shadow-card');
+          brand.classList.add('text-cream');
+          brand.classList.remove('text-burgundy');
+          navLinks.forEach(function (l) { l.classList.add('text-cream'); l.classList.remove('text-ink'); });
+          toggleBtn.classList.add('text-cream', 'border-cream/40');
+          toggleBtn.classList.remove('text-ink', 'border-ink/25');
+        }
+      }
+
+      let solidNow = false;
+      function onScroll() {
+        const shouldBeSolid = window.scrollY > window.innerHeight * 0.7;
+        if (shouldBeSolid !== solidNow) {
+          solidNow = shouldBeSolid;
+          setHeaderSolid(solidNow);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* ---------- Mobile menu ---------- */
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      function setMenu(open) {
+        toggleBtn.setAttribute('aria-expanded', String(open));
+        mobileMenu.classList.toggle('hidden', !open);
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+        toggleBtn.querySelector('.sr-only').textContent = open ? 'Close menu' : 'Open menu';
+      }
+      toggleBtn.addEventListener('click', function () {
+        setMenu(toggleBtn.getAttribute('aria-expanded') !== 'true');
+      });
+      document.querySelectorAll('[data-mobile-link]').forEach(function (link) {
+        link.addEventListener('click', function () { setMenu(false); });
+      });
+
+      /* ---------- Menu data + tabs (FEATURE A) ---------- */
+      const MENU = {
+        starters: {
+          title: 'Starters',
+          note: 'To begin. Bright, small, made to share.',
+          items: [
+            { name: 'Market Crudite', desc: 'Garden vegetables, whipped goat cheese, brown butter crumb.', price: 14 },
+            { name: 'French Onion Soup', desc: 'Slow caramelized onion, comte crust, day old sourdough.', price: 13 },
+            { name: 'Steak Tartare', desc: 'Hand cut beef, capers, shallot, cured yolk, grilled bread.', price: 18 },
+            { name: 'Smoked Trout Rillettes', desc: 'Lemon creme fraiche, pickled fennel, rye toast.', price: 16 },
+            { name: 'Burgundy Escargot', desc: 'Six snails, garlic parsley butter, baguette to mop.', price: 15 },
+          ],
+        },
+        mains: {
+          title: 'Mains',
+          note: 'From the fire and the pass. Hearty and seasonal.',
+          items: [
+            { name: 'Duck Confit', desc: 'Crisp leg, white bean cassoulet, charred greens.', price: 32 },
+            { name: 'Seared Day Boat Scallops', desc: 'Cauliflower puree, brown butter, capers, golden raisin.', price: 34 },
+            { name: 'Bistro Steak Frites', desc: 'Grilled flank, peppercorn jus, hand cut fries, watercress.', price: 29 },
+            { name: 'Wild Mushroom Risotto', desc: 'Carnaroli rice, aged parmesan, thyme, truffle oil.', price: 26 },
+            { name: 'Bouillabaisse', desc: 'Saffron seafood stew, rouille, grilled garlic crouton.', price: 36 },
+          ],
+        },
+        desserts: {
+          title: 'Desserts',
+          note: 'To finish. Classic, with a light hand on the sugar.',
+          items: [
+            { name: 'Creme Brulee', desc: 'Tahitian vanilla custard, torched caramel crust.', price: 11 },
+            { name: 'Dark Chocolate Pot de Creme', desc: 'Sea salt, olive oil, toasted hazelnut.', price: 12 },
+            { name: 'Tarte Tatin', desc: 'Caramelized apple, puff pastry, creme fraiche.', price: 13 },
+            { name: 'Lemon Tart', desc: 'Bright curd, almond shortcrust, torched meringue.', price: 11 },
+            { name: 'Cheese Selection', desc: 'Three regional cheeses, honeycomb, walnut, quince.', price: 17 },
+          ],
+        },
+        wine: {
+          title: 'Wine',
+          note: 'A short, considered list. By the glass unless noted.',
+          items: [
+            { name: 'Cremant de Bourgogne', desc: 'Sparkling, crisp apple and brioche. Glass.', price: 14 },
+            { name: 'Sancerre, Loire', desc: 'Sauvignon blanc, flint and citrus. Glass.', price: 16 },
+            { name: 'Cotes du Rhone', desc: 'Grenache blend, plush red fruit and pepper. Glass.', price: 13 },
+            { name: 'Burgundy Pinot Noir', desc: 'Silky, earthy, cherry and forest floor. Glass.', price: 19 },
+            { name: 'Sauternes', desc: 'Honeyed dessert wine, apricot and almond. Glass.', price: 15 },
+          ],
+        },
+      };
+
+      const order = ['starters', 'mains', 'desserts', 'wine'];
+      const tabs = Array.from(document.querySelectorAll('.menu-tab'));
+      const list = document.getElementById('menuList');
+      const catTitle = document.getElementById('menuCategoryTitle');
+      const catNote = document.getElementById('menuCategoryNote');
+      const panel = document.getElementById('panel-menu');
+
+      const ACTIVE = ['bg-burgundy', 'text-cream', 'shadow-soft'];
+      const INACTIVE = ['text-ink', 'hover:text-burgundy'];
+
+      function renderCategory(key) {
+        const data = MENU[key];
+        if (!data) return;
+        catTitle.textContent = data.title;
+        catNote.textContent = data.note;
+        list.innerHTML = '';
+        data.items.forEach(function (item) {
+          const li = document.createElement('li');
+          li.className = 'menu-fade flex items-baseline gap-4 py-5';
+          li.innerHTML =
+            '<div class="flex-1 min-w-0">' +
+              '<h4 class="font-display text-xl text-ink">' + item.name + '</h4>' +
+              '<p class="text-stone text-sm mt-1 leading-relaxed">' + item.desc + '</p>' +
+            '</div>' +
+            '<span class="font-display text-lg text-burgundy tabular-nums shrink-0" aria-label="' + item.price + ' dollars">' + item.price + '</span>';
+          list.appendChild(li);
+        });
+      }
+
+      function activateTab(tab, focusTab) {
+        const key = tab.getAttribute('data-tab');
+        tabs.forEach(function (t) {
+          const selected = t === tab;
+          t.setAttribute('aria-selected', String(selected));
+          t.tabIndex = selected ? 0 : -1;
+          if (selected) {
+            t.classList.add.apply(t.classList, ACTIVE);
+            t.classList.remove.apply(t.classList, INACTIVE);
+          } else {
+            t.classList.remove.apply(t.classList, ACTIVE);
+            t.classList.add.apply(t.classList, INACTIVE);
+          }
+        });
+        panel.setAttribute('aria-labelledby', tab.id);
+        renderCategory(key);
+        if (focusTab) tab.focus();
+      }
+
+      tabs.forEach(function (tab, idx) {
+        tab.addEventListener('click', function () { activateTab(tab); });
+        tab.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const dir = e.key === 'ArrowRight' ? 1 : -1;
+            const next = (idx + dir + tabs.length) % tabs.length;
+            activateTab(tabs[next], true);
+          } else if (e.key === 'Home') {
+            e.preventDefault(); activateTab(tabs[0], true);
+          } else if (e.key === 'End') {
+            e.preventDefault(); activateTab(tabs[tabs.length - 1], true);
+          }
+        });
+      });
+
+      // Init active tab (Starters)
+      activateTab(tabs[0]);
+
+      /* ---------- Reservation form (FEATURE B) ---------- */
+      const form = document.getElementById('reserveForm');
+      const success = document.getElementById('reserveSuccess');
+
+      // Set date min to today, and default value to today
+      const dateInput = document.getElementById('resDate');
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      dateInput.min = yyyy + '-' + mm + '-' + dd;
+
+      function showError(id, show) {
+        const field = document.getElementById(id);
+        const err = document.querySelector('[data-error-for="' + id + '"]');
+        if (err) err.classList.toggle('hidden', !show);
+        if (field) {
+          field.classList.toggle('border-burgundy', show);
+          field.classList.toggle('ring-1', show);
+          field.classList.toggle('ring-burgundy/40', show);
+          field.setAttribute('aria-invalid', String(show));
+        }
+      }
+
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function validate() {
+        let ok = true;
+        let firstInvalid = null;
+
+        function check(id, condition) {
+          showError(id, !condition);
+          if (!condition) { ok = false; if (!firstInvalid) firstInvalid = document.getElementById(id); }
+        }
+
+        check('resDate', !!dateInput.value);
+        check('resTime', !!document.getElementById('resTime').value);
+        check('resParty', !!document.getElementById('resParty').value);
+        check('resName', document.getElementById('resName').value.trim().length > 0);
+        check('resEmail', emailRe.test(document.getElementById('resEmail').value.trim()));
+
+        if (firstInvalid) firstInvalid.focus();
+        return ok;
+      }
+
+      // Clear error on input
+      ['resDate', 'resTime', 'resParty', 'resName', 'resEmail'].forEach(function (id) {
+        const el = document.getElementById(id);
+        const evt = (el.tagName === 'SELECT') ? 'change' : 'input';
+        el.addEventListener(evt, function () { showError(id, false); });
+      });
+
+      function formatDate(value) {
+        // value is yyyy-mm-dd; build a local date to avoid timezone shift
+        const parts = value.split('-');
+        const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+        return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validate()) return;
+
+        const name = document.getElementById('resName').value.trim();
+        const email = document.getElementById('resEmail').value.trim();
+        const dateVal = dateInput.value;
+        const timeVal = document.getElementById('resTime').value;
+        const partyVal = document.getElementById('resParty').value;
+        const partyLabel = partyVal === '1' ? '1 guest' : partyVal + ' guests';
+
+        document.getElementById('confName').textContent = name;
+        document.getElementById('confEmail').textContent = email;
+        document.getElementById('confDate').textContent = formatDate(dateVal);
+        document.getElementById('confTime').textContent = timeVal;
+        document.getElementById('confParty').textContent = partyLabel;
+
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+        success.classList.add('menu-fade');
+        success.setAttribute('tabindex', '-1');
+        success.focus();
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.getElementById('reserveReset').addEventListener('click', function () {
+        form.reset();
+        ['resDate', 'resTime', 'resParty', 'resName', 'resEmail'].forEach(function (id) { showError(id, false); });
+        success.classList.add('hidden');
+        form.classList.remove('hidden');
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        dateInput.focus();
+      });
+
+      /* ---------- Reveal on scroll ---------- */
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealEls = document.querySelectorAll('.reveal, [data-reveal]');
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); el.style.opacity = '1'; el.style.transform = 'none'; });
+      } else {
+        // data-reveal hero items: simple staggered fade in
+        const heroItems = document.querySelectorAll('[data-reveal]');
+        heroItems.forEach(function (el, i) {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(18px)';
+          el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+          setTimeout(function () { el.style.opacity = '1'; el.style.transform = 'none'; }, 180 + i * 130);
+        });
+
+        const io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
+</body>
+</html>

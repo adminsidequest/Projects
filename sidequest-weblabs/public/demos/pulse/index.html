@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Pulse · Boutique Strength and Conditioning Studio</title>
+  <meta name="description" content="Pulse is a boutique strength and conditioning studio. Train with elite coaches across strength, HIIT, mobility, and boxing. Find your class, pick a plan, and show up strong." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            night:   "#0B0B0C",
+            surface: "#141416",
+            volt:    "#C6F432",
+            heat:    "#FF4D2E",
+            ink:     "#F5F5F4",
+          },
+          fontFamily: {
+            display: ['Anton', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            volt: '0 0 0 1px rgba(198,244,50,0.35), 0 0 28px rgba(198,244,50,0.28)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { scroll-behavior: smooth; }
+    body { background-color:#0B0B0C; }
+
+    /* Neon glow helpers (cannot be expressed cleanly as utilities) */
+    .glow-volt { text-shadow: 0 0 14px rgba(198,244,50,0.55), 0 0 32px rgba(198,244,50,0.28); }
+    .glow-heat { text-shadow: 0 0 14px rgba(255,77,46,0.55); }
+
+    /* Diagonal energy stripe behind the closing CTA */
+    .stripe-bg {
+      background-image:
+        repeating-linear-gradient(115deg, rgba(198,244,50,0.10) 0 2px, transparent 2px 26px),
+        radial-gradient(120% 140% at 0% 0%, rgba(255,77,46,0.18), transparent 55%),
+        radial-gradient(120% 140% at 100% 100%, rgba(198,244,50,0.16), transparent 55%);
+    }
+
+    /* Hero darkening + grain feel */
+    .hero-overlay {
+      background:
+        linear-gradient(180deg, rgba(11,11,12,0.55) 0%, rgba(11,11,12,0.72) 45%, rgba(11,11,12,0.96) 100%);
+    }
+
+    /* Slim diagonal accent clip used on section dividers */
+    .skew-edge { clip-path: polygon(0 14%, 100% 0, 100% 86%, 0 100%); }
+
+    /* Custom scrollbar for the schedule day-tab strip on small screens */
+    .tab-scroll::-webkit-scrollbar { height: 6px; }
+    .tab-scroll::-webkit-scrollbar-thumb { background: #2a2a2e; border-radius: 9999px; }
+    .tab-scroll::-webkit-scrollbar-track { background: transparent; }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.6); opacity: 0.45; }
+    }
+    .live-dot { animation: pulseDot 1.4s ease-in-out infinite; }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; }
+    .reveal.in { animation: floatUp 0.7s cubic-bezier(.2,.7,.2,1) forwards; }
+
+    /* Focus visibility everywhere */
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid #C6F432;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root { scroll-behavior: auto; }
+      .live-dot { animation: none; }
+      .reveal { opacity: 1 !important; animation: none !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-night font-body text-ink antialiased selection:bg-volt selection:text-night">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-volt focus:text-night focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-night/80 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#top" class="group flex items-center gap-2.5" aria-label="Pulse home">
+          <span class="grid h-9 w-9 place-items-center rounded-md bg-volt text-night">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12h4l3 8 4-16 3 8h6" />
+            </svg>
+          </span>
+          <span class="font-display text-2xl tracking-wide leading-none">PULSE</span>
+        </a>
+
+        <nav class="hidden md:block" aria-label="Primary">
+          <ul class="flex items-center gap-8 text-sm font-semibold text-zinc-300">
+            <li><a class="transition hover:text-volt" href="#programs">Programs</a></li>
+            <li><a class="transition hover:text-volt" href="#schedule">Schedule</a></li>
+            <li><a class="transition hover:text-volt" href="#coaches">Coaches</a></li>
+            <li><a class="transition hover:text-volt" href="#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+
+        <div class="hidden md:block">
+          <a href="#pricing" class="inline-flex items-center gap-2 rounded-full bg-volt px-5 py-2.5 text-sm font-bold text-night shadow-volt transition hover:brightness-110">
+            Join now
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button id="menuBtn" class="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-ink" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg id="iconOpen" viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg id="iconClose" viewBox="0 0 24 24" class="hidden h-6 w-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 bg-night/95 backdrop-blur-md">
+      <nav class="mx-auto max-w-7xl px-5 py-5" aria-label="Mobile">
+        <ul class="flex flex-col gap-1 text-base font-semibold">
+          <li><a class="block rounded-lg px-3 py-3 hover:bg-white/5 hover:text-volt" href="#programs">Programs</a></li>
+          <li><a class="block rounded-lg px-3 py-3 hover:bg-white/5 hover:text-volt" href="#schedule">Schedule</a></li>
+          <li><a class="block rounded-lg px-3 py-3 hover:bg-white/5 hover:text-volt" href="#coaches">Coaches</a></li>
+          <li><a class="block rounded-lg px-3 py-3 hover:bg-white/5 hover:text-volt" href="#pricing">Pricing</a></li>
+        </ul>
+        <a href="#pricing" class="mt-3 block rounded-full bg-volt px-5 py-3 text-center text-sm font-bold text-night">Join now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- ============ HERO ============ -->
+    <section class="relative isolate min-h-[100svh] flex items-end overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80"
+        onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-hero/1600/1000'"
+        alt="Athletes training with barbells in a dimly lit strength gym"
+        class="absolute inset-0 -z-10 h-full w-full object-cover" width="1600" height="1000" />
+      <div class="hero-overlay absolute inset-0 -z-10"></div>
+
+      <div class="mx-auto w-full max-w-7xl px-5 sm:px-8 pb-16 pt-28 sm:pb-24">
+        <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-volt/40 bg-volt/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-volt">
+          <span class="h-2 w-2 rounded-full bg-volt live-dot"></span>
+          Boutique strength · conditioning
+        </p>
+
+        <h1 class="font-display uppercase leading-[0.86] tracking-tight">
+          <span class="block text-[15vw] sm:text-7xl md:text-8xl lg:text-9xl">Train loud.</span>
+          <span class="block text-[15vw] sm:text-7xl md:text-8xl lg:text-9xl text-volt glow-volt">Get strong.</span>
+        </h1>
+
+        <p class="mt-6 max-w-xl text-lg text-zinc-300">
+          Pulse is a coach led studio built for real progress. Small classes, heavy intent, and a room that pushes you every single session.
+        </p>
+
+        <div class="mt-9 flex flex-col sm:flex-row gap-4">
+          <a href="#pricing" class="inline-flex items-center justify-center gap-2 rounded-full bg-volt px-7 py-4 text-base font-bold text-night shadow-volt transition hover:brightness-110">
+            Start your trial
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#schedule" class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-4 text-base font-bold text-ink transition hover:border-volt/60 hover:text-volt">
+            See the schedule
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STAT COUNTERS (Feature A) ============ -->
+    <section id="stats" aria-label="Studio by the numbers" class="border-y border-white/5 bg-surface">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-14 sm:py-20">
+        <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div class="reveal text-center md:text-left">
+            <div class="font-display text-6xl sm:text-7xl text-volt glow-volt" data-count="1200" data-suffix="+">0</div>
+            <p class="mt-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">Members strong</p>
+          </div>
+          <div class="reveal text-center md:text-left">
+            <div class="font-display text-6xl sm:text-7xl" data-count="45">0</div>
+            <p class="mt-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">Classes a week</p>
+          </div>
+          <div class="reveal text-center md:text-left">
+            <div class="font-display text-6xl sm:text-7xl text-heat glow-heat" data-count="18">0</div>
+            <p class="mt-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">Elite coaches</p>
+          </div>
+          <div class="reveal text-center md:text-left">
+            <div class="font-display text-6xl sm:text-7xl" data-count="7">0</div>
+            <p class="mt-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">Years in the game</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMS ============ -->
+    <section id="programs" class="scroll-mt-20">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-20 sm:py-28">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.2em] text-volt">What we run</p>
+            <h2 class="mt-2 font-display text-5xl sm:text-6xl uppercase leading-none">Pick your<br class="hidden sm:block" /> battle</h2>
+          </div>
+          <p class="max-w-md text-zinc-400">Four programs, one standard. Every class is coached, scaled to your level, and built to move the needle.</p>
+        </div>
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Card -->
+          <article class="group reveal relative overflow-hidden rounded-2xl border border-white/5 bg-surface transition duration-300 hover:-translate-y-1.5 hover:border-volt/50 hover:shadow-volt">
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-strength/900/675'" alt="Lifter racking a loaded barbell during a strength session" loading="lazy" width="900" height="675" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+              <span class="absolute left-3 top-3 rounded-full bg-night/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-volt">Build</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Strength</h3>
+              <p class="mt-2 text-sm text-zinc-400">Barbell focused programming. Squat, press, pull, repeat. Get measurably stronger week over week.</p>
+            </div>
+          </article>
+
+          <article class="group reveal relative overflow-hidden rounded-2xl border border-white/5 bg-surface transition duration-300 hover:-translate-y-1.5 hover:border-volt/50 hover:shadow-volt">
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-hiit/900/675'" alt="Athlete mid jump during a high intensity interval workout" loading="lazy" width="900" height="675" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+              <span class="absolute left-3 top-3 rounded-full bg-night/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-heat">Burn</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">HIIT</h3>
+              <p class="mt-2 text-sm text-zinc-400">Short, brutal, effective. Intervals that spike your engine and torch the clock in 40 minutes flat.</p>
+            </div>
+          </article>
+
+          <article class="group reveal relative overflow-hidden rounded-2xl border border-white/5 bg-surface transition duration-300 hover:-translate-y-1.5 hover:border-volt/50 hover:shadow-volt">
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-mobility/900/675'" alt="Person stretching on a mat during a mobility class" loading="lazy" width="900" height="675" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+              <span class="absolute left-3 top-3 rounded-full bg-night/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-volt">Restore</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Mobility</h3>
+              <p class="mt-2 text-sm text-zinc-400">Move better, recover faster. Guided mobility work that keeps you training hard and injury free.</p>
+            </div>
+          </article>
+
+          <article class="group reveal relative overflow-hidden rounded-2xl border border-white/5 bg-surface transition duration-300 hover:-translate-y-1.5 hover:border-volt/50 hover:shadow-volt">
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-boxing/900/675'" alt="Boxer striking a heavy bag with focus mitts nearby" loading="lazy" width="900" height="675" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+              <span class="absolute left-3 top-3 rounded-full bg-night/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-heat">Strike</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Boxing</h3>
+              <p class="mt-2 text-sm text-zinc-400">Footwork, combos, and conditioning on the bag. Sharpen your skills and your cardio at once.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WEEKLY SCHEDULE (Feature B) ============ -->
+    <section id="schedule" class="scroll-mt-20 border-y border-white/5 bg-surface">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-20 sm:py-28">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.2em] text-volt">This week</p>
+            <h2 class="mt-2 font-display text-5xl sm:text-6xl uppercase leading-none">The schedule</h2>
+          </div>
+          <p class="max-w-md text-zinc-400">Tap a day to see every class. Spots are live, first come first served. Reserve early on peak evenings.</p>
+        </div>
+
+        <!-- Day tabs -->
+        <div class="mt-10 tab-scroll overflow-x-auto">
+          <div id="dayTabs" role="tablist" aria-label="Days of the week" class="flex min-w-max gap-2 pb-2">
+            <!-- buttons injected by JS -->
+          </div>
+        </div>
+
+        <!-- Class list -->
+        <div id="classList" class="mt-6 grid gap-3" aria-live="polite">
+          <!-- rows injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COACHES ============ -->
+    <section id="coaches" class="scroll-mt-20">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-20 sm:py-28">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-sm font-bold uppercase tracking-[0.2em] text-volt">The team</p>
+            <h2 class="mt-2 font-display text-5xl sm:text-6xl uppercase leading-none">Your coaches</h2>
+          </div>
+          <p class="max-w-md text-zinc-400">Certified, competitive, and obsessed with your progress. These are the people who will know your name and your numbers.</p>
+        </div>
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="group reveal overflow-hidden rounded-2xl border border-white/5 bg-surface transition hover:border-volt/50">
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=700&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-coach1/700/933'" alt="Coach Maya Reyes smiling in the gym" loading="lazy" width="700" height="933" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Maya Reyes</h3>
+              <p class="mt-1 text-sm font-semibold text-volt">Head Strength Coach</p>
+              <p class="mt-2 text-sm text-zinc-400">Powerlifting national qualifier. Lives for a clean, heavy pull.</p>
+            </div>
+          </article>
+
+          <article class="group reveal overflow-hidden rounded-2xl border border-white/5 bg-surface transition hover:border-volt/50">
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=700&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-coach2/700/933'" alt="Coach Theo Banks standing with arms crossed" loading="lazy" width="700" height="933" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Theo Banks</h3>
+              <p class="mt-1 text-sm font-semibold text-volt">HIIT and Conditioning</p>
+              <p class="mt-2 text-sm text-zinc-400">Former sprinter. Builds engines that just refuse to quit.</p>
+            </div>
+          </article>
+
+          <article class="group reveal overflow-hidden rounded-2xl border border-white/5 bg-surface transition hover:border-volt/50">
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=700&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-coach3/700/933'" alt="Coach Priya Nair holding a kettlebell" loading="lazy" width="700" height="933" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Priya Nair</h3>
+              <p class="mt-1 text-sm font-semibold text-volt">Mobility and Recovery</p>
+              <p class="mt-2 text-sm text-zinc-400">Movement specialist who keeps the whole room training pain free.</p>
+            </div>
+          </article>
+
+          <article class="group reveal overflow-hidden rounded-2xl border border-white/5 bg-surface transition hover:border-volt/50">
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1583468982228-19f19164aee2?auto=format&fit=crop&w=700&q=80" onerror="this.onerror=null;this.src='https://picsum.photos/seed/pulse-coach4/700/933'" alt="Coach Marcus Cole wrapping his hands before boxing" loading="lazy" width="700" height="933" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+            </div>
+            <div class="p-5">
+              <h3 class="font-display text-2xl uppercase tracking-wide">Marcus Cole</h3>
+              <p class="mt-1 text-sm font-semibold text-volt">Boxing and Footwork</p>
+              <p class="mt-2 text-sm text-zinc-400">Amateur boxing record of 14 and 2. Sharp hands, sharper drills.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRICING (Feature C) ============ -->
+    <section id="pricing" class="scroll-mt-20 border-t border-white/5 bg-surface">
+      <div class="mx-auto max-w-7xl px-5 sm:px-8 py-20 sm:py-28">
+        <div class="text-center">
+          <p class="text-sm font-bold uppercase tracking-[0.2em] text-volt">Membership</p>
+          <h2 class="mt-2 font-display text-5xl sm:text-6xl uppercase leading-none">Choose your plan</h2>
+          <p class="mx-auto mt-4 max-w-xl text-zinc-400">No contracts, no hidden fees. Cancel any time. Every plan starts with a free week so you can feel the room first.</p>
+        </div>
+
+        <div class="mt-14 grid gap-6 lg:grid-cols-3 lg:items-stretch">
+          <!-- Basic -->
+          <article class="group flex flex-col rounded-2xl border border-white/8 bg-night p-7 transition duration-300 hover:-translate-y-1.5 hover:border-volt/40">
+            <h3 class="font-display text-3xl uppercase tracking-wide">Basic</h3>
+            <p class="mt-1 text-sm text-zinc-400">For the steady starter.</p>
+            <div class="mt-6 flex items-end gap-1">
+              <span class="font-display text-6xl leading-none">$59</span>
+              <span class="mb-1.5 text-sm font-semibold text-zinc-400">/ month</span>
+            </div>
+            <ul class="mt-7 space-y-3 text-sm" role="list">
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>8 classes per month</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Access to open gym hours</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Free intro assessment</li>
+            </ul>
+            <a href="#top" class="mt-8 inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-ink transition hover:border-volt hover:text-volt">Choose Basic</a>
+          </article>
+
+          <!-- Pro (featured) -->
+          <article class="group relative flex flex-col rounded-2xl border-2 border-volt bg-night p-7 shadow-volt transition duration-300 lg:-mt-4 lg:mb-0 hover:-translate-y-1.5">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-volt px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-night">Most popular</span>
+            <h3 class="font-display text-3xl uppercase tracking-wide text-volt glow-volt">Pro</h3>
+            <p class="mt-1 text-sm text-zinc-400">For the committed.</p>
+            <div class="mt-6 flex items-end gap-1">
+              <span class="font-display text-6xl leading-none">$99</span>
+              <span class="mb-1.5 text-sm font-semibold text-zinc-400">/ month</span>
+            </div>
+            <ul class="mt-7 space-y-3 text-sm" role="list">
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Unlimited group classes</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Priority class booking</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Monthly progress check in</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Open gym all hours</li>
+            </ul>
+            <a href="#top" class="mt-8 inline-flex items-center justify-center rounded-full bg-volt px-6 py-3 text-sm font-bold text-night transition hover:brightness-110">Choose Pro</a>
+          </article>
+
+          <!-- Unlimited -->
+          <article class="group flex flex-col rounded-2xl border border-white/8 bg-night p-7 transition duration-300 hover:-translate-y-1.5 hover:border-volt/40">
+            <h3 class="font-display text-3xl uppercase tracking-wide">Unlimited</h3>
+            <p class="mt-1 text-sm text-zinc-400">For the all in.</p>
+            <div class="mt-6 flex items-end gap-1">
+              <span class="font-display text-6xl leading-none">$149</span>
+              <span class="mb-1.5 text-sm font-semibold text-zinc-400">/ month</span>
+            </div>
+            <ul class="mt-7 space-y-3 text-sm" role="list">
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Everything in Pro</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Two private coaching sessions</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Custom nutrition guide</li>
+              <li class="flex gap-3"><svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-volt" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Bring a guest each week</li>
+            </ul>
+            <a href="#top" class="mt-8 inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-ink transition hover:border-volt hover:text-volt">Choose Unlimited</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING CTA ============ -->
+    <section aria-label="Join Pulse" class="relative">
+      <div class="stripe-bg">
+        <div class="mx-auto max-w-7xl px-5 sm:px-8 py-20 sm:py-28 text-center">
+          <h2 class="font-display text-5xl sm:text-7xl md:text-8xl uppercase leading-[0.9]">
+            Your first week<br /><span class="text-volt glow-volt">is on us.</span>
+          </h2>
+          <p class="mx-auto mt-5 max-w-xl text-lg text-zinc-300">Walk in, lift heavy, leave better. No pressure, no commitment, just one honest week to feel what Pulse is about.</p>
+          <a href="#pricing" class="mt-9 inline-flex items-center justify-center gap-2 rounded-full bg-volt px-8 py-4 text-base font-bold text-night shadow-volt transition hover:brightness-110">
+            Claim your free week
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="border-t border-white/5 bg-night">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8 py-14">
+      <div class="grid gap-10 md:grid-cols-4">
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-9 w-9 place-items-center rounded-md bg-volt text-night">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l3 8 4-16 3 8h6"/></svg>
+            </span>
+            <span class="font-display text-2xl tracking-wide">PULSE</span>
+          </div>
+          <p class="mt-4 max-w-xs text-sm text-zinc-400">Boutique strength and conditioning. Built for people who want to get genuinely strong.</p>
+        </div>
+
+        <nav aria-label="Footer programs">
+          <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Programs</h3>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li><a class="hover:text-volt" href="#programs">Strength</a></li>
+            <li><a class="hover:text-volt" href="#programs">HIIT</a></li>
+            <li><a class="hover:text-volt" href="#programs">Mobility</a></li>
+            <li><a class="hover:text-volt" href="#programs">Boxing</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Footer studio">
+          <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Studio</h3>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li><a class="hover:text-volt" href="#schedule">Schedule</a></li>
+            <li><a class="hover:text-volt" href="#coaches">Coaches</a></li>
+            <li><a class="hover:text-volt" href="#pricing">Pricing</a></li>
+            <li><a class="hover:text-volt" href="#stats">About</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Visit</h3>
+          <address class="mt-4 not-italic text-sm text-zinc-300 leading-relaxed">
+            220 Forge Street, Unit 4<br />
+            Open Mon to Sat, 6am to 9pm<br />
+            <a class="hover:text-volt" href="tel:+15550148820">+1 555 014 8820</a>
+          </address>
+        </div>
+      </div>
+
+      <div class="mt-12 flex flex-col gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-xs text-zinc-500">© 2026 Pulse Strength Studio. All rights reserved.</p>
+        <p class="text-xs text-zinc-500">Demo build by <a href="/" class="font-semibold text-zinc-300 hover:text-volt">Sidequest Weblabs</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JS ============ -->
+  <script>
+    (function () {
+      "use strict";
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---------- Mobile menu ---------- */
+      var menuBtn = document.getElementById("menuBtn");
+      var mobileMenu = document.getElementById("mobileMenu");
+      var iconOpen = document.getElementById("iconOpen");
+      var iconClose = document.getElementById("iconClose");
+
+      function setMenu(open) {
+        mobileMenu.classList.toggle("hidden", !open);
+        iconOpen.classList.toggle("hidden", open);
+        iconClose.classList.toggle("hidden", !open);
+        menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      }
+      menuBtn.addEventListener("click", function () {
+        setMenu(mobileMenu.classList.contains("hidden"));
+      });
+      mobileMenu.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", function () { setMenu(false); });
+      });
+
+      /* ---------- Reveal on scroll ---------- */
+      var reveals = document.querySelectorAll(".reveal");
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        reveals.forEach(function (el) { el.classList.add("in"); });
+      } else {
+        var revObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add("in"); revObs.unobserve(e.target); }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { revObs.observe(el); });
+      }
+
+      /* ---------- Stat counters (Feature A) ---------- */
+      var counters = document.querySelectorAll("[data-count]");
+      function runCount(el) {
+        var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+        var suffix = el.getAttribute("data-suffix") || "";
+        if (reduceMotion) { el.textContent = target.toLocaleString() + suffix; return; }
+        var start = null, dur = 1500;
+        function step(ts) {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(eased * target).toLocaleString() + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toLocaleString() + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+      if (!("IntersectionObserver" in window)) {
+        counters.forEach(runCount);
+      } else {
+        var statObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { runCount(e.target); statObs.unobserve(e.target); }
+          });
+        }, { threshold: 0.5 });
+        counters.forEach(function (el) { statObs.observe(el); });
+      }
+
+      /* ---------- Weekly schedule (Feature B) ---------- */
+      var days = [
+        { key: "Mon", label: "Mon", full: "Monday" },
+        { key: "Tue", label: "Tue", full: "Tuesday" },
+        { key: "Wed", label: "Wed", full: "Wednesday" },
+        { key: "Thu", label: "Thu", full: "Thursday" },
+        { key: "Fri", label: "Fri", full: "Friday" },
+        { key: "Sat", label: "Sat", full: "Saturday" },
+        { key: "Sun", label: "Sun", full: "Sunday" }
+      ];
+
+      var schedule = {
+        Mon: [
+          { time: "6:00 AM",  name: "Sunrise Strength", coach: "Maya Reyes",  spots: 3 },
+          { time: "12:00 PM", name: "Lunch HIIT",       coach: "Theo Banks",  spots: 8 },
+          { time: "6:00 PM",  name: "Heavy Lower Body", coach: "Maya Reyes",  spots: 0 },
+          { time: "7:30 PM",  name: "Boxing Basics",    coach: "Marcus Cole", spots: 5 }
+        ],
+        Tue: [
+          { time: "6:30 AM",  name: "Engine Intervals", coach: "Theo Banks",  spots: 6 },
+          { time: "9:00 AM",  name: "Mobility Flow",     coach: "Priya Nair",  spots: 11 },
+          { time: "5:30 PM",  name: "Upper Body Power",  coach: "Maya Reyes",  spots: 2 },
+          { time: "7:00 PM",  name: "Bag Work",          coach: "Marcus Cole", spots: 4 }
+        ],
+        Wed: [
+          { time: "6:00 AM",  name: "Sunrise Strength",  coach: "Maya Reyes",  spots: 7 },
+          { time: "12:00 PM", name: "Express HIIT",      coach: "Theo Banks",  spots: 9 },
+          { time: "6:00 PM",  name: "Posterior Chain",   coach: "Maya Reyes",  spots: 1 },
+          { time: "7:30 PM",  name: "Recovery Mobility", coach: "Priya Nair",  spots: 10 }
+        ],
+        Thu: [
+          { time: "6:30 AM",  name: "Conditioning Circuit", coach: "Theo Banks",  spots: 5 },
+          { time: "9:00 AM",  name: "Mobility Flow",         coach: "Priya Nair",  spots: 12 },
+          { time: "5:30 PM",  name: "Full Body Strength",    coach: "Maya Reyes",  spots: 0 },
+          { time: "7:00 PM",  name: "Sparring Skills",       coach: "Marcus Cole", spots: 3 }
+        ],
+        Fri: [
+          { time: "6:00 AM",  name: "Power Hour",      coach: "Maya Reyes",  spots: 4 },
+          { time: "12:00 PM", name: "Lunch HIIT",      coach: "Theo Banks",  spots: 8 },
+          { time: "5:30 PM",  name: "Friday Finisher", coach: "Theo Banks",  spots: 2 },
+          { time: "6:45 PM",  name: "Boxing Combos",   coach: "Marcus Cole", spots: 6 }
+        ],
+        Sat: [
+          { time: "8:00 AM",  name: "Weekend Strength", coach: "Maya Reyes",  spots: 9 },
+          { time: "9:30 AM",  name: "Team Conditioning", coach: "Theo Banks",  spots: 5 },
+          { time: "11:00 AM", name: "Open Mat Boxing",   coach: "Marcus Cole", spots: 7 }
+        ],
+        Sun: [
+          { time: "9:00 AM",  name: "Long Mobility",     coach: "Priya Nair",  spots: 14 },
+          { time: "10:30 AM", name: "Active Recovery",   coach: "Priya Nair",  spots: 12 }
+        ]
+      };
+
+      var tabsEl = document.getElementById("dayTabs");
+      var listEl = document.getElementById("classList");
+      var activeDay = "Mon";
+
+      function spotTag(spots) {
+        if (spots <= 0) {
+          return '<span class="rounded-full bg-heat/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-heat">Full · waitlist</span>';
+        }
+        if (spots <= 3) {
+          return '<span class="rounded-full bg-heat/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-heat">' + spots + ' spots left</span>';
+        }
+        return '<span class="rounded-full bg-volt/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-volt">' + spots + ' spots left</span>';
+      }
+
+      function renderTabs() {
+        tabsEl.innerHTML = "";
+        days.forEach(function (d) {
+          var isActive = d.key === activeDay;
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.setAttribute("role", "tab");
+          btn.id = "tab-" + d.key;
+          btn.setAttribute("aria-selected", isActive ? "true" : "false");
+          btn.setAttribute("aria-controls", "classList");
+          btn.tabIndex = isActive ? 0 : -1;
+          btn.dataset.day = d.key;
+          btn.className = "shrink-0 rounded-full px-5 py-2.5 text-sm font-bold uppercase tracking-wider transition " +
+            (isActive
+              ? "bg-volt text-night shadow-volt"
+              : "border border-white/10 bg-surface text-zinc-300 hover:border-volt/50 hover:text-volt");
+          btn.innerHTML = '<span class="sm:hidden">' + d.label + '</span><span class="hidden sm:inline">' + d.full + '</span>';
+          tabsEl.appendChild(btn);
+        });
+      }
+
+      function renderList() {
+        var classes = schedule[activeDay] || [];
+        listEl.innerHTML = "";
+        if (!classes.length) {
+          listEl.innerHTML = '<p class="rounded-2xl border border-white/5 bg-night p-8 text-center text-zinc-400">No classes scheduled. Rest up and come back tomorrow.</p>';
+          return;
+        }
+        classes.forEach(function (c) {
+          var row = document.createElement("div");
+          row.className = "reveal in flex flex-col gap-3 rounded-2xl border border-white/5 bg-night p-5 transition hover:border-volt/40 sm:flex-row sm:items-center sm:justify-between";
+          row.innerHTML =
+            '<div class="flex items-center gap-5">' +
+              '<div class="w-20 shrink-0 font-display text-xl text-volt">' + c.time + '</div>' +
+              '<div>' +
+                '<h3 class="font-display text-xl uppercase tracking-wide leading-none">' + c.name + '</h3>' +
+                '<p class="mt-1 text-sm text-zinc-400">with ' + c.coach + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="pl-[6.25rem] sm:pl-0">' + spotTag(c.spots) + '</div>';
+          listEl.appendChild(row);
+        });
+      }
+
+      function selectDay(key) {
+        activeDay = key;
+        renderTabs();
+        renderList();
+      }
+
+      tabsEl.addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-day]");
+        if (btn) selectDay(btn.dataset.day);
+      });
+
+      // Arrow-key navigation across the tablist
+      tabsEl.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
+        e.preventDefault();
+        var idx = days.findIndex(function (d) { return d.key === activeDay; });
+        if (e.key === "ArrowRight") idx = (idx + 1) % days.length;
+        else if (e.key === "ArrowLeft") idx = (idx - 1 + days.length) % days.length;
+        else if (e.key === "Home") idx = 0;
+        else if (e.key === "End") idx = days.length - 1;
+        selectDay(days[idx].key);
+        var next = document.getElementById("tab-" + days[idx].key);
+        if (next) next.focus();
+      });
+
+      renderTabs();
+      renderList();
+
+      /* ---------- Footer year safety ---------- */
+      // (static year is fine for a demo, no-op kept intentionally minimal)
+    })();
+  </script>
+</body>
+</html>
